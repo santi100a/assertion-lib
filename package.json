@@ -1,0 +1,7 @@
+{
+  "name": "@santi100/assertion-lib",
+  "version": "1.0.1",
+  "main": "index.js",
+  "license": "Other",
+  "type": "module"
+}
