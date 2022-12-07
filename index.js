@@ -4,7 +4,7 @@ class AssertionError extends Error {
         Object.setPrototypeOf(this, Object.assign(this, { expected, actual, operator }));
     }
 }
-function assert(condition, { expected, actual, operator }) {
+function assert(condition, { expected = null, actual = null, operator = null }) {
     if (!condition) throw new AssertionError(expected, actual, operator);
 }
 function assertType(val, expectedType) {
