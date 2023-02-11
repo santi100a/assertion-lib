@@ -1,0 +1,12 @@
+{
+    "include": ["src/*.ts"],
+    "exclude": [],
+    "compilerOptions": {
+        "declaration": true,
+        "target": "ES3",
+        "strict": true,
+        "module": "commonjs",
+        "outDir": "cjs/",
+        "noImplicitAny": true
+    }
+}

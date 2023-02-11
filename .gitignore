@@ -1,9 +1,2 @@
 node_modules
-# yarn
-yarn.lock
-
-# pnpm
-pnpm-lock.yaml
-
-# npm
-package-lock.json
+*.log

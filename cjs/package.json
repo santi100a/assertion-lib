@@ -1,7 +1,6 @@
 {
-  "name": "assertion-lib",
-  "version": "1.0.1",
+  "name": "@santi100/assertion-lib",
   "main": "index.js",
-  "license": "Other",
+  "license": "MIT",
   "type": "commonjs"
 }

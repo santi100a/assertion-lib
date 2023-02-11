@@ -1,30 +1,23 @@
 # Santi's Assertion Library (JavaScript)
 
-This is an assertion library that asserts types and conditions.
+This is an assertion library for types and conditions. It's designed to be lightweight and portable between
+the browser and Node.js.
+
+**Keep in mind the source code uses class definitions, so this library only works on environments that support ES6 or higher for now. I'm striving to install a transpiler like Babel to convert my code to ES3.**
 
 ## Usage
-
-### Importing from a JavaScript File
-
-#### Via NPM 
-Import ```@santi100/assertion-lib``` (for ESM) or ```@santi100/assertion-lib/cjs``` (for CJS).
-#### Via Source Control 
-
-Import ```./assertion-lib/index.js``` (ESM) or ```./assertion-lib/cjs/index.js``` (CJS).
-
 ### Installation
+Run ```npm install @santi100/assertion-lib```, ```yarn add @santi100/assertion-lib```, or ```pnpm install @santi100/assertion-lib```, depending on what package manager you use in your project.
 
-#### Via NPM
-
-- Run ```npm install @santi100/assertion-lib```, ```yarn add @santi100/assertion-lib```, or ```pnpm install @santi100/assertion-lib```, depending on what package manager you use in your project.
-
-#### Via Source Control
-
-- Run ```git clone https://github.com/santi100a/assertion-lib```.
-- Enter the directory and run ```npm install```, ```yarn install```, or ```pnpm install``` to install dependencies.
-
+This library already comes with built-in TypeScript definitions.
 ### Exported Members
 
-```assert(condition: boolean, { expected, actual, operator }?: AssertOptionalParams): void;``` Asserts that ```condition``` is truthy. Throws a (custom) ```AssertionError``` otherwise.
+```typescript
+assert(condition: boolean, { expected, actual, operator }?: AssertOptionalParams): void;
+``` 
+Asserts that ```condition``` is truthy. Throws an ```AssertionError``` otherwise.
 
-```assertType(val: unknown, expectedType: string): void;``` Asserts that the type of ```val``` is ```expectedType```. Throws an ```AssertionError``` otherwise.
+```typescript
+assertType(val: unknown, expectedType: string): void;
+``` 
+Asserts that the type of ```val``` is ```expectedType```. Throws an ```AssertionError``` otherwise.
