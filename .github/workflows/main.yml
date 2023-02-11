@@ -27,6 +27,9 @@ jobs:
       - name: Install dependencies
         run: yarn
 
+      - name: Set access token
+        run: npm set //registry.npmjs.org/:_authToken ${{ secrets.NPM_AUTH_TOKEN }}
+
       - name: Run tests
         run: yarn test
 
