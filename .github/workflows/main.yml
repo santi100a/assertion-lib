@@ -5,11 +5,13 @@ on:
       - main
     paths:
       - src/*.ts
+      - .github/workflows/*.*
   pull_request:
     branches:
       - main
     paths:
       - src/*.ts
+      - .github/workflows/*.*
 jobs:
   test:
     runs-on: ubuntu-latest
