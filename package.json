@@ -8,6 +8,7 @@
     "url": "https://github.com/santi100a/assertion-lib.git",
     "type": "git"
   },
+  "description": "Santi's Assertion Library: Quick and reliable assertions!",
   "author": "santi100a <santyrojasprieto9@gmail.com>",
   "devDependencies": {
     "@types/jest": "^29.5.0",
