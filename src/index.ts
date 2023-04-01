@@ -130,7 +130,7 @@ export function assertTypeOf(arg: any, expectedType: Type, name: string) {
  * @param name The name for the expression of `arg`.
  * @param choices An array containing the posible values `arg` should have in order for an error not
  * to be thrown.
- */
+ */ 
 export function assertOneOf(arg: any, name: string, choices: any[]) {
 	if (indexOf(choices, arg) === -1)
 		throw new TypeError(

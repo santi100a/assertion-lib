@@ -16,6 +16,7 @@
   },
   "scripts": {
     "dev": "tsc -w",
+    "build": "tsc",
     "test": "jest",
     "test:watch": "jest --watchAll"
   },
