@@ -1,5 +1,23 @@
 import everything from './cjs/index.js';
 
-const { assert, assertType } = everything;
+const {
+	assert,
+	assertType,
+	assertInteger,
+	assertMax,
+	assertMin,
+	assertOneOf,
+	assertRange,
+	assertTypeOf
+} = everything;
 
-export { assert, assertType };
+export {
+	assert,
+	assertType,
+	assertInteger,
+	assertMax,
+	assertMin,
+	assertOneOf,
+	assertRange,
+	assertTypeOf
+};

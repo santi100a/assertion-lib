@@ -15,7 +15,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 exports.__esModule = true;
-exports.assertType = exports.assert = void 0;
+exports.assertRange = exports.assertMax = exports.assertMin = exports.assertInteger = exports.assertOneOf = exports.assertTypeOf = exports.assertType = exports.assert = exports.AssertionError = void 0;
 var AssertionError = /** @class */ (function (_super) {
     __extends(AssertionError, _super);
     function AssertionError(expected, actual, operator) {
@@ -27,6 +27,7 @@ var AssertionError = /** @class */ (function (_super) {
     }
     return AssertionError;
 }(Error));
+exports.AssertionError = AssertionError;
 /**
  * Asserts that `condition` is truthy.
  * Throws an {@link AssertionError} otherwise.
@@ -40,7 +41,10 @@ var AssertionError = /** @class */ (function (_super) {
  * @returns {void} Nothing.
  */
 function assert(condition, errorParams) {
-    var _a = errorParams || {}, expected = _a.expected, actual = _a.actual, operator = _a.operator;
+    if (errorParams === void 0) { errorParams = {
+        expected: true, actual: false, operator: '==='
+    }; }
+    var expected = errorParams.expected, actual = errorParams.actual, operator = errorParams.operator;
     if (!condition)
         throw new AssertionError(expected, actual, operator);
 }
@@ -59,3 +63,89 @@ function assertType(val, expectedType) {
         throw new AssertionError(expectedType, typeof val, 'typeof');
 }
 exports.assertType = assertType;
+/**
+ * Asserts that the type of `arg` is `expectedType`. Throws a `TypeError` otherwise.
+ *
+ * @param arg Any value.
+ * @param expectedType The expected type. Must be one of {@link Type}.
+ * @param name The name for the expression of `arg`.
+ */
+function assertTypeOf(arg, expectedType, name) {
+    if ([
+        'string',
+        'number',
+        'bigint',
+        'boolean',
+        'symbol',
+        'undefined',
+        'object',
+        'function'
+    ].indexOf(expectedType) === -1)
+        if (typeof arg !== expectedType)
+            throw new TypeError("\"".concat(name, "\" must be of type \"").concat(expectedType, "\". Got \"").concat(arg, "\" of type \"").concat(typeof arg, "\"."));
+}
+exports.assertTypeOf = assertTypeOf;
+/**
+ * Asserts `arg` is one of `options`.  Throws a `TypeError` otherwise.
+ *
+ * @param arg Any value.
+ * @param name The name for the expression of `arg`.
+ * @param options An array containing the posible values `arg` should have in order for an error not
+ * to be thrown.
+ */
+function assertOneOf(arg, name, options) {
+    if (options.indexOf(arg) === -1)
+        throw new TypeError("\"".concat(name, "\" must be one of \"").concat(options.join(', '), "\". Got \"").concat(arg, "\" of type \"").concat(typeof arg, "\"."));
+}
+exports.assertOneOf = assertOneOf;
+function __isInteger(n) {
+    return n - Math.floor(n) <= 0;
+}
+/**
+ * Asserts `arg` is an integer. Throws a `TypeError` otherwise.
+ *
+ * @param arg Any number.
+ * @param name The name for the expression for `arg`.
+ */
+function assertInteger(arg, name) {
+    if (!__isInteger(arg))
+        throw new TypeError("\"".concat(name, "\" must be an integer. Got \"").concat(arg, "\" of type \"").concat(typeof arg, "\"."));
+}
+exports.assertInteger = assertInteger;
+/**
+ * Asserts `arg` is bigger or equal than `min`. Throws a `TypeError` otherwise.
+ *
+ * @param arg Any value.
+ * @param name The name of the expression for `arg`.
+ * @param min The minimum value for `arg`.
+ */
+function assertMin(arg, name, min) {
+    if (arg < min)
+        throw new TypeError("\"".concat(name, "\" must be bigger than ").concat(min, ". Got \"").concat(arg, "\" of type \"").concat(typeof arg, "\"."));
+}
+exports.assertMin = assertMin;
+/**
+ * Asserts `arg` is smaller or equal than `max`. Throws a `TypeError` otherwise.
+ *
+ * @param arg Any value.
+ * @param name The name of the expression for `arg`.
+ * @param max The maximum value for `arg`.
+ */
+function assertMax(arg, name, max) {
+    if (arg > max)
+        throw new TypeError("\"".concat(name, "\" must be smaller than ").concat(max, ". Got \"").concat(arg, "\" of type \"").concat(typeof arg, "\"."));
+}
+exports.assertMax = assertMax;
+/**
+ * Asserts `arg` is between `min + 1` and `max + 1` (inclusive). Throws a `TypeError` otherwise.
+ *
+ * @param arg Any value.
+ * @param name The name of the expression for `arg`.
+ * @param min The minimum value for `arg`.
+ * @param max The maximum value for `arg`.
+ */
+function assertRange(arg, name, min, max) {
+    if (arg > max || arg < min)
+        throw new TypeError("\"".concat(name, "\" must be smaller than ").concat(max, " and bigger than ").concat(min, ". Got \"").concat(arg, "\" of type \"").concat(typeof arg, "\"."));
+}
+exports.assertRange = assertRange;
