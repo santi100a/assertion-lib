@@ -62,14 +62,14 @@ export interface AssertOptionalParams<E, A> {
  */
 export declare function assertTypeOf(arg: any, expectedType: Type, name: string): void;
 /**
- * Asserts `arg` is one of `options`.  Throws a `TypeError` otherwise.
+ * Asserts `arg` is one of `choices`.  Throws a `TypeError` otherwise.
  *
  * @param arg Any value.
  * @param name The name for the expression of `arg`.
- * @param options An array containing the posible values `arg` should have in order for an error not
+ * @param choices An array containing the posible values `arg` should have in order for an error not
  * to be thrown.
  */
-export declare function assertOneOf(arg: any, name: string, options: any[]): void;
+export declare function assertOneOf(arg: any, name: string, choices: any[]): void;
 /**
  * Asserts `arg` is an integer. Throws a `TypeError` otherwise.
  *

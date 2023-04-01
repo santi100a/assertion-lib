@@ -36,8 +36,8 @@ Asserts that the type of `val` is `expectedType`. Throws an `AssertionError` oth
 - `function assertTypeOf(arg: any, expectedType: Type, name: string): void;` 
 Asserts that the type of `arg` is `expectedType`. Throws a `TypeError` otherwise.
 
-- `function assertOneOf(arg: any, name: string, options: any[]): void;`
-Asserts `arg` is one of `options`.  Throws a `TypeError` otherwise.
+- `function assertOneOf(arg: any, name: string, choices: any[]): void;`
+Asserts `arg` is one of `choices`.  Throws a `TypeError` otherwise.
 
 - `function assertInteger(arg: number, name: string): void;`: 
 Asserts `arg` is an integer. Throws a `TypeError` otherwise.

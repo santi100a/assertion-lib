@@ -18,5 +18,8 @@
     "dev": "tsc -w",
     "test": "jest",
     "test:watch": "jest --watchAll"
+  },
+  "dependencies": {
+    "@santi100/equal-lib": "^1.0.8"
   }
 }

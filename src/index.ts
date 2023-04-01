@@ -1,3 +1,12 @@
+import { deepEquality } from '@santi100/equal-lib';
+
+function indexOf(arr: any[], item: any) {
+	for (const idx in arr) {
+		if (deepEquality(arr[idx], item)) return arr[idx];
+	}
+	return -1;
+}
+
 export class AssertionError<E = unknown, A = unknown>
 	extends Error
 	implements AssertOptionalParams<E, A>
@@ -38,7 +47,9 @@ export class AssertionError<E = unknown, A = unknown>
 export function assert(
 	condition: boolean,
 	errorParams: AssertOptionalParams<true, boolean> = {
-		expected: true, actual: false, operator: '==='
+		expected: true,
+		actual: false,
+		operator: '==='
 	}
 ): void {
 	const { expected, actual, operator } = errorParams;
@@ -85,41 +96,45 @@ export interface AssertOptionalParams<E, A> {
 }
 /**
  * Asserts that the type of `arg` is `expectedType`. Throws a `TypeError` otherwise.
- * 
+ *
  * @param arg Any value.
  * @param expectedType The expected type. Must be one of {@link Type}.
  * @param name The name for the expression of `arg`.
  */
 export function assertTypeOf(arg: any, expectedType: Type, name: string) {
-	if (
-		[
-			'string',
-			'number',
-			'bigint',
-			'boolean',
-			'symbol',
-			'undefined',
-			'object',
-			'function'
-		].indexOf(expectedType) === -1
-	)
-		if (typeof arg !== expectedType)
-			throw new TypeError(
-				`"${name}" must be of type "${expectedType}". Got "${arg}" of type "${typeof arg}".`
-			);
+	const TYPES = [
+		'string',
+		'number',
+		'bigint',
+		'boolean',
+		'symbol',
+		'undefined',
+		'object',
+		'function'
+	];
+	if (TYPES.indexOf(expectedType) === -1)
+		throw new TypeError(
+			`${name} must be one of ${TYPES.join(
+				', '
+			)}. Got "${arg} of type "${typeof arg}".`
+		);
+	if (typeof arg !== expectedType)
+		throw new TypeError(
+			`"${name}" must be of type "${expectedType}". Got "${arg}" of type "${typeof arg}".`
+		);
 }
 /**
- * Asserts `arg` is one of `options`.  Throws a `TypeError` otherwise.
- * 
+ * Asserts `arg` is one of `choices`.  Throws a `TypeError` otherwise.
+ *
  * @param arg Any value.
  * @param name The name for the expression of `arg`.
- * @param options An array containing the posible values `arg` should have in order for an error not
+ * @param choices An array containing the posible values `arg` should have in order for an error not
  * to be thrown.
  */
-export function assertOneOf(arg: any, name: string, options: any[]) {
-	if (options.indexOf(arg) === -1)
+export function assertOneOf(arg: any, name: string, choices: any[]) {
+	if (indexOf(choices, arg) === -1)
 		throw new TypeError(
-			`"${name}" must be one of "${options.join(
+			`"${name}" must be one of "${choices.join(
 				', '
 			)}". Got "${arg}" of type "${typeof arg}".`
 		);
@@ -129,7 +144,7 @@ function __isInteger(n: number) {
 }
 /**
  * Asserts `arg` is an integer. Throws a `TypeError` otherwise.
- * 
+ *
  * @param arg Any number.
  * @param name The name for the expression for `arg`.
  */
@@ -141,7 +156,7 @@ export function assertInteger(arg: number, name: string) {
 }
 /**
  * Asserts `arg` is bigger or equal than `min`. Throws a `TypeError` otherwise.
- * 
+ *
  * @param arg Any value.
  * @param name The name of the expression for `arg`.
  * @param min The minimum value for `arg`.
@@ -155,7 +170,7 @@ export function assertMin(arg: any, name: string, min: any) {
 
 /**
  * Asserts `arg` is smaller or equal than `max`. Throws a `TypeError` otherwise.
- * 
+ *
  * @param arg Any value.
  * @param name The name of the expression for `arg`.
  * @param max The maximum value for `arg`.
@@ -168,7 +183,7 @@ export function assertMax(arg: any, name: string, max: any) {
 }
 /**
  * Asserts `arg` is between `min + 1` and `max + 1` (inclusive). Throws a `TypeError` otherwise.
- * 
+ *
  * @param arg Any value.
  * @param name The name of the expression for `arg`.
  * @param min The minimum value for `arg`.
@@ -177,8 +192,6 @@ export function assertMax(arg: any, name: string, max: any) {
 export function assertRange(arg: any, name: string, min: any, max: any) {
 	if (arg > max || arg < min)
 		throw new TypeError(
-			`"${name}" must be smaller than ${max} and bigger than ${min}. Got "${
-				arg
-			}" of type "${typeof arg}".`
+			`"${name}" must be smaller than ${max} and bigger than ${min}. Got "${arg}" of type "${typeof arg}".`
 		);
 }

@@ -16,6 +16,14 @@ var __extends = (this && this.__extends) || (function () {
 })();
 exports.__esModule = true;
 exports.assertRange = exports.assertMax = exports.assertMin = exports.assertInteger = exports.assertOneOf = exports.assertTypeOf = exports.assertType = exports.assert = exports.AssertionError = void 0;
+var equal_lib_1 = require("@santi100/equal-lib");
+function indexOf(arr, item) {
+    for (var idx in arr) {
+        if ((0, equal_lib_1.deepEquality)(arr[idx], item))
+            return arr[idx];
+    }
+    return -1;
+}
 var AssertionError = /** @class */ (function (_super) {
     __extends(AssertionError, _super);
     function AssertionError(expected, actual, operator) {
@@ -42,7 +50,9 @@ exports.AssertionError = AssertionError;
  */
 function assert(condition, errorParams) {
     if (errorParams === void 0) { errorParams = {
-        expected: true, actual: false, operator: '==='
+        expected: true,
+        actual: false,
+        operator: '==='
     }; }
     var expected = errorParams.expected, actual = errorParams.actual, operator = errorParams.operator;
     if (!condition)
@@ -71,7 +81,7 @@ exports.assertType = assertType;
  * @param name The name for the expression of `arg`.
  */
 function assertTypeOf(arg, expectedType, name) {
-    if ([
+    var TYPES = [
         'string',
         'number',
         'bigint',
@@ -80,22 +90,24 @@ function assertTypeOf(arg, expectedType, name) {
         'undefined',
         'object',
         'function'
-    ].indexOf(expectedType) === -1)
-        if (typeof arg !== expectedType)
-            throw new TypeError("\"".concat(name, "\" must be of type \"").concat(expectedType, "\". Got \"").concat(arg, "\" of type \"").concat(typeof arg, "\"."));
+    ];
+    if (TYPES.indexOf(expectedType) === -1)
+        throw new TypeError("".concat(name, " must be one of ").concat(TYPES.join(', '), ". Got \"").concat(arg, " of type \"").concat(typeof arg, "\"."));
+    if (typeof arg !== expectedType)
+        throw new TypeError("\"".concat(name, "\" must be of type \"").concat(expectedType, "\". Got \"").concat(arg, "\" of type \"").concat(typeof arg, "\"."));
 }
 exports.assertTypeOf = assertTypeOf;
 /**
- * Asserts `arg` is one of `options`.  Throws a `TypeError` otherwise.
+ * Asserts `arg` is one of `choices`.  Throws a `TypeError` otherwise.
  *
  * @param arg Any value.
  * @param name The name for the expression of `arg`.
- * @param options An array containing the posible values `arg` should have in order for an error not
+ * @param choices An array containing the posible values `arg` should have in order for an error not
  * to be thrown.
  */
-function assertOneOf(arg, name, options) {
-    if (options.indexOf(arg) === -1)
-        throw new TypeError("\"".concat(name, "\" must be one of \"").concat(options.join(', '), "\". Got \"").concat(arg, "\" of type \"").concat(typeof arg, "\"."));
+function assertOneOf(arg, name, choices) {
+    if (indexOf(choices, arg) === -1)
+        throw new TypeError("\"".concat(name, "\" must be one of \"").concat(choices.join(', '), "\". Got \"").concat(arg, "\" of type \"").concat(typeof arg, "\"."));
 }
 exports.assertOneOf = assertOneOf;
 function __isInteger(n) {
