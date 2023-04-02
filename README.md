@@ -27,29 +27,32 @@ Make sure you follow the [contribution Code of Conduct](https://github.com/santi
 
 ### API
 
-- `assert(condition: boolean, { expected, actual, operator }?: AssertOptionalParams): void;`
+- `function assert(condition: boolean, { expected, actual, operator }?: AssertOptionalParams): void;`
 Asserts that `condition` is truthy. Throws an `AssertionError` otherwise.
 
-- `assertType(val: unknown, expectedType: string): void;`
+- `function assertType(val: unknown, expectedType: string): void;`
 Asserts that the type of `val` is `expectedType`. Throws an `AssertionError` otherwise.
 
-- `function assertTypeOf(arg: any, expectedType: Type, name: string): void;` 
+- `function assertTypeOf(arg: any, expectedType: Type, name: string): void;` (since 1.0.6)
 Asserts that the type of `arg` is `expectedType`. Throws a `TypeError` otherwise.
 
-- `function assertOneOf(arg: any, name: string, choices: any[]): void;`
+- `function assertOneOf(arg: any, name: string, choices: any[]): void;` (since 1.0.6)
 Asserts `arg` is one of `choices`.  Throws a `TypeError` otherwise.
 
-- `function assertInteger(arg: number, name: string): void;`: 
+- `function assertInteger(arg: number, name: string): void;` (since 1.0.6)
 Asserts `arg` is an integer. Throws a `TypeError` otherwise.
 
-- `function assertMin(arg: any, name: string, min: any): void;`:
+- `function assertMin(arg: any, name: string, min: any): void;` (since 1.0.6)
 Asserts `arg` is bigger or equal than `min`. Throws a `TypeError` otherwise.
 
-- `function assertMax(arg: any, name: string, max: any): void;`
+- `function assertMax(arg: any, name: string, max: any): void;` (since 1.0.6)
 Asserts `arg` is smaller or equal than `max`. Throws a `TypeError` otherwise.
 
-- `function assertRange(arg: any, name: string, min: any, max: any): void;`: 
-Asserts `arg` is between `min + 1` and `max + 1` (inclusive). Throws a `TypeError` otherwise.
+- `function assertRange(arg: any, name: string, min: any, max: any): void;` (since 1.0.6)
+Asserts `arg` is between `min + 1` and `max + 1` (inclusive). Throws a `TypeError` 
+(`RangeError` since 1.0.7) otherwise.
+- `function assertArray(arg: any, name?: string): void;` (since 1.0.7)
+Asserts `arg` is an Array. Throws a `TypeError` otherwise.
 
 ## Usage example
 ```typescript

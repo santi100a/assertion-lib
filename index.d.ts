@@ -60,7 +60,7 @@ export interface AssertOptionalParams<E, A> {
  * @param expectedType The expected type. Must be one of {@link Type}.
  * @param name The name for the expression of `arg`.
  */
-export declare function assertTypeOf(arg: any, expectedType: Type, name: string): void;
+export declare function assertTypeOf(arg: any, expectedType: Type, name?: string): void;
 /**
  * Asserts `arg` is one of `choices`.  Throws a `TypeError` otherwise.
  *
@@ -76,9 +76,9 @@ export declare function assertOneOf(arg: any, name: string, choices: any[]): voi
  * @param arg Any number.
  * @param name The name for the expression for `arg`.
  */
-export declare function assertInteger(arg: number, name: string): void;
+export declare function assertInteger(arg: number, name?: string): void;
 /**
- * Asserts `arg` is bigger or equal than `min`. Throws a `TypeError` otherwise.
+ * Asserts `arg` is bigger or equal than `min`. Throws a `RangeError` otherwise.
  *
  * @param arg Any value.
  * @param name The name of the expression for `arg`.
@@ -86,7 +86,7 @@ export declare function assertInteger(arg: number, name: string): void;
  */
 export declare function assertMin(arg: any, name: string, min: any): void;
 /**
- * Asserts `arg` is smaller or equal than `max`. Throws a `TypeError` otherwise.
+ * Asserts `arg` is smaller or equal than `max`. Throws a `RangeError` otherwise.
  *
  * @param arg Any value.
  * @param name The name of the expression for `arg`.
@@ -94,7 +94,7 @@ export declare function assertMin(arg: any, name: string, min: any): void;
  */
 export declare function assertMax(arg: any, name: string, max: any): void;
 /**
- * Asserts `arg` is between `min + 1` and `max + 1` (inclusive). Throws a `TypeError` otherwise.
+ * Asserts `arg` is between `min + 1` and `max + 1` (inclusive). Throws a `RangeError` otherwise.
  *
  * @param arg Any value.
  * @param name The name of the expression for `arg`.
@@ -102,4 +102,11 @@ export declare function assertMax(arg: any, name: string, max: any): void;
  * @param max The maximum value for `arg`.
  */
 export declare function assertRange(arg: any, name: string, min: any, max: any): void;
+/**
+ * Asserts `arg` is an Array. Throws a `TypeError` otherwise.
+ *
+ * @param arg Any value.
+ * @param name The name of the expression for `arg`.
+ */
+export declare function assertArray(arg: any, name?: string): void;
 export {};

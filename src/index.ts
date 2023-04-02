@@ -101,7 +101,7 @@ export interface AssertOptionalParams<E, A> {
  * @param expectedType The expected type. Must be one of {@link Type}.
  * @param name The name for the expression of `arg`.
  */
-export function assertTypeOf(arg: any, expectedType: Type, name: string) {
+export function assertTypeOf(arg: any, expectedType: Type, name = 'arg') {
 	const TYPES = [
 		'string',
 		'number',
@@ -112,12 +112,7 @@ export function assertTypeOf(arg: any, expectedType: Type, name: string) {
 		'object',
 		'function'
 	];
-	if (TYPES.indexOf(expectedType) === -1)
-		throw new TypeError(
-			`${name} must be one of ${TYPES.join(
-				', '
-			)}. Got "${arg} of type "${typeof arg}".`
-		);
+	assertOneOf(expectedType, 'expectedType', TYPES);
 	if (typeof arg !== expectedType)
 		throw new TypeError(
 			`"${name}" must be of type "${expectedType}". Got "${arg}" of type "${typeof arg}".`
@@ -130,7 +125,7 @@ export function assertTypeOf(arg: any, expectedType: Type, name: string) {
  * @param name The name for the expression of `arg`.
  * @param choices An array containing the posible values `arg` should have in order for an error not
  * to be thrown.
- */ 
+ */
 export function assertOneOf(arg: any, name: string, choices: any[]) {
 	if (indexOf(choices, arg) === -1)
 		throw new TypeError(
@@ -148,14 +143,14 @@ function __isInteger(n: number) {
  * @param arg Any number.
  * @param name The name for the expression for `arg`.
  */
-export function assertInteger(arg: number, name: string) {
+export function assertInteger(arg: number, name = 'arg') {
 	if (!__isInteger(arg))
 		throw new TypeError(
 			`"${name}" must be an integer. Got "${arg}" of type "${typeof arg}".`
 		);
 }
 /**
- * Asserts `arg` is bigger or equal than `min`. Throws a `TypeError` otherwise.
+ * Asserts `arg` is bigger or equal than `min`. Throws a `RangeError` otherwise.
  *
  * @param arg Any value.
  * @param name The name of the expression for `arg`.
@@ -163,13 +158,13 @@ export function assertInteger(arg: number, name: string) {
  */
 export function assertMin(arg: any, name: string, min: any) {
 	if (arg < min)
-		throw new TypeError(
+		throw new RangeError(
 			`"${name}" must be bigger than ${min}. Got "${arg}" of type "${typeof arg}".`
 		);
 }
 
 /**
- * Asserts `arg` is smaller or equal than `max`. Throws a `TypeError` otherwise.
+ * Asserts `arg` is smaller or equal than `max`. Throws a `RangeError` otherwise.
  *
  * @param arg Any value.
  * @param name The name of the expression for `arg`.
@@ -177,12 +172,12 @@ export function assertMin(arg: any, name: string, min: any) {
  */
 export function assertMax(arg: any, name: string, max: any) {
 	if (arg > max)
-		throw new TypeError(
+		throw new RangeError(
 			`"${name}" must be smaller than ${max}. Got "${arg}" of type "${typeof arg}".`
 		);
 }
 /**
- * Asserts `arg` is between `min + 1` and `max + 1` (inclusive). Throws a `TypeError` otherwise.
+ * Asserts `arg` is between `min + 1` and `max + 1` (inclusive). Throws a `RangeError` otherwise.
  *
  * @param arg Any value.
  * @param name The name of the expression for `arg`.
@@ -191,7 +186,19 @@ export function assertMax(arg: any, name: string, max: any) {
  */
 export function assertRange(arg: any, name: string, min: any, max: any) {
 	if (arg > max || arg < min)
-		throw new TypeError(
+		throw new RangeError(
 			`"${name}" must be smaller than ${max} and bigger than ${min}. Got "${arg}" of type "${typeof arg}".`
+		);
+}
+/**
+ * Asserts `arg` is an Array. Throws a `TypeError` otherwise.
+ *
+ * @param arg Any value.
+ * @param name The name of the expression for `arg`.
+ */
+export function assertArray(arg: any, name = 'arg') {
+	if (!(arg instanceof Array))
+		throw new TypeError(
+			`"${name}" must be an Array. Got "${arg}" of type "${typeof arg}".`
 		);
 }
