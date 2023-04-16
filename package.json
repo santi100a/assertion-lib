@@ -1,9 +1,14 @@
 {
   "name": "@santi100/assertion-lib",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "cjs/index.js",
-  "module": "./index.js",
-  "keywords": ["assertion", "type-assertion", "lightweight", "es3"],
+  "module": "./index.mjs",
+  "keywords": [
+    "assertion",
+    "type-assertion",
+    "lightweight",
+    "es3"
+  ],
   "description": "Santi's Assertion Library: Quick and reliable assertions!",
   "license": "MIT",
   "author": "santi100a <santyrojasprieto9@gmail.com>",
@@ -23,6 +28,7 @@
     "dev": "tsc -w",
     "build": "tsc",
     "test": "jest",
+    "esm-wrapper": "node scripts/esm-wrapper.js",
     "test:watch": "jest --watchAll"
   }
 }

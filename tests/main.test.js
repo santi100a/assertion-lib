@@ -8,7 +8,10 @@ describe('assertion-lib test suites', () => {
 		assertMin,
 		assertOneOf,
 		assertRange,
-		assertArray
+		assertArray,
+		assertInstanceOf,
+		assertExclusiveMax,
+		assertExclusiveMin
 	} = require('..');
 
 	describe('assert', () => {
@@ -124,9 +127,126 @@ describe('assertion-lib test suites', () => {
 			expect(() => assertArray('string', 'array')).toThrow(TypeError);
 			expect(() => assertArray(false, 'array')).toThrow(TypeError);
 			expect(() => assertArray({}, 'array')).toThrow(TypeError);
-			expect(() => assertArray(new Date, 'array')).toThrow(TypeError);
+			expect(() => assertArray(new Date(), 'array')).toThrow(TypeError);
 			expect(() => assertArray(/regex/, 'array')).toThrow(TypeError);
 			expect(() => assertArray(() => {}, 'array')).toThrow(TypeError);
+		});
+	});
+	describe('assertInstanceOf_function', () => {
+		// Tests that assertInstanceOf correctly identifies when arg is an instance of clas.
+		it('test_happy_path', () => {
+			class TestClass {}
+			const testInstance = new TestClass();
+			expect(() =>
+				assertInstanceOf(testInstance, TestClass, 'testInstance')
+			).not.toThrow();
+		});
+
+		// Tests that assertInstanceOf throws a TypeError when arg is not an instance of clas.
+		it('test_edge_case', () => {
+			class TestClass {}
+			const testInstance = {};
+			expect(() =>
+				assertInstanceOf(testInstance, TestClass, 'testInstance')
+			).toThrow(TypeError);
+		});
+
+		// Tests that assertInstanceOf throws a TypeError when clas is not a valid constructor.
+		it('test_edge_case_2', () => {
+			const invalidClass = 'not a valid constructor';
+			const testInstance = {};
+			expect(() =>
+				assertInstanceOf(testInstance, invalidClass, 'testInstance')
+			).toThrow(TypeError);
+		});
+	});
+
+	describe('assertExclusiveMax_function', () => {
+		// Tests that the function works correctly when arg is smaller than max.
+		it('test_arg_smaller_than_max', () => {
+			expect(() => assertExclusiveMax(5, 10, 'test')).not.toThrow();
+		});
+
+		// Tests that the function works correctly when arg or max is null or undefined.
+		it('test_null_or_undefined', () => {
+			expect(() => assertExclusiveMax(null, 10, 'test')).not.toThrow(TypeError);
+			expect(() => assertExclusiveMax(undefined, 10, 'test')).not.toThrow(
+				TypeError
+			);
+			expect(() => assertExclusiveMax(5, null, 'test')).toThrow(TypeError);
+			expect(() => assertExclusiveMax(5, undefined, 'test')).not.toThrow(
+				TypeError
+			);
+		});
+
+		// Tests that the function throws a TypeError with the correct message when arg or max is a negative number or a non-numeric value.
+		it('test_negative_or_non_numeric', () => {
+			expect(() => assertExclusiveMax(-5, 10, 'test')).not.toThrow(TypeError);
+			expect(() => assertExclusiveMax('not a number', 10, 'test')).not.toThrow(
+				TypeError
+			);
+			expect(() => assertExclusiveMax(5, -10, 'test')).toThrow(TypeError);
+			expect(() => assertExclusiveMax(5, 'not a number', 'test')).not.toThrow(
+				TypeError
+			);
+		});
+
+		// Tests that the function throws a TypeError with the correct message when arg is equal to max.
+		it('test_arg_equal_to_max', () => {
+			expect(() => assertExclusiveMax(5, 5, 'test')).toThrow(TypeError);
+			expect(() => assertExclusiveMax('test', 'test', 'test')).toThrow(
+				TypeError
+			);
+			expect(() => assertExclusiveMax(true, true, 'test')).toThrow(TypeError);
+			expect(() => assertExclusiveMax(null, null, 'test')).toThrow(TypeError);
+		});
+
+		// Tests that the function works correctly when arg and max are of different types.
+		it('test_different_types', () => {
+			expect(() => assertExclusiveMax(5, '10', 'test')).not.toThrow(TypeError);
+			expect(() => assertExclusiveMax('test', 10, 'test')).not.toThrow(
+				TypeError
+			);
+			expect(() => assertExclusiveMax(true, 1, 'test')).toThrow(TypeError);
+			expect(() => assertExclusiveMax(null, 0, 'test')).toThrow(TypeError);
+		});
+
+		// Tests that the function works correctly when name parameter is not provided.
+		it('test_name_not_provided', () => {
+			expect(() => assertExclusiveMax(5, 10)).not.toThrow(TypeError);
+			expect(() => assertExclusiveMax('test', 10)).not.toThrow(TypeError);
+			expect(() => assertExclusiveMax(true, 1)).toThrow(TypeError);
+			expect(() => assertExclusiveMax(null, 0)).toThrow(TypeError);
+		});
+	});
+	describe('assertExclusiveMin_function', () => {
+	
+		// Tests that the function works correctly when arg is greater than min. 
+		it("test_arg_greater_than_min", () => {
+			expect(() => assertExclusiveMin(5, 3)).not.toThrow();
+		});
+	
+		// Tests that the function works correctly when arg is a string that can be converted to a number. 
+		it("test_arg_string_to_number", () => {
+			expect(() => assertExclusiveMin("5", 3)).not.toThrow();
+		});
+	
+		// Tests that the function throws a TypeError with the correct message when arg is not greater than min. 
+		it("test_arg_type_error", () => {
+			expect(() => assertExclusiveMin(3, 3)).toThrow(TypeError);
+			expect(() => assertExclusiveMin(3, 3)).toThrow(`"arg" must be bigger than 3. Got 3 of type number.`);
+		});
+	
+		// Tests that the function throws a TypeError with the correct message when arg is equal to min.  
+		it("test_arg_equal_to_min", () => {
+			expect(() => assertExclusiveMin(5, 5)).toThrow(TypeError);
+			expect(() => assertExclusiveMin(5, 5)).toThrow(`"arg" must be bigger than 5. Got 5 of type number.`);
+		});
+	
+		// Tests that the function throws a TypeError with the correct message when arg is undefined.  
+		it("test_arg_undefined", () => {
+			expect(() => assertExclusiveMin(undefined, 5))
+			expect(() => assertExclusiveMin(undefined, 5))
 		});
 	});
 });

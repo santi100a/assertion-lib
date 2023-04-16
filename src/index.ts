@@ -59,16 +59,16 @@ export function assert(
  * Asserts that the type of `val` is `expectedType`.
  * Throws an {@link AssertionError} otherwise.
  *
- * @param {unknown} val An expression to assert its type.
- * @param {string} expectedType The type to assert.
- * @returns {void} Nothing.
+ * @param val An expression whose type is to be asserted.
+ * @param expectedType The expected type. Must be one of {@link Type}.
+ * @deprecated Use {@link assertTypeOf} instead.
  */
 export function assertType<T = unknown>(val: T, expectedType: Type): void {
 	const wrongType = typeof val !== expectedType;
 	if (wrongType) throw new AssertionError(expectedType, typeof val, 'typeof');
 }
 
-type Type =
+export type Type =
 	| 'string'
 	| 'number'
 	| 'bigint'
@@ -97,9 +97,9 @@ export interface AssertOptionalParams<E, A> {
 /**
  * Asserts that the type of `arg` is `expectedType`. Throws a `TypeError` otherwise.
  *
- * @param arg Any value.
+ * @param arg An expression whose type is to be asserted.
  * @param expectedType The expected type. Must be one of {@link Type}.
- * @param name The name for the expression of `arg`.
+ * @param name An optional expression name to be put in the `TypeError`'s message. Defaults to "arg".
  */
 export function assertTypeOf(arg: any, expectedType: Type, name = 'arg') {
 	const TYPES = [
@@ -121,13 +121,15 @@ export function assertTypeOf(arg: any, expectedType: Type, name = 'arg') {
 /**
  * Asserts `arg` is one of `choices`.  Throws a `TypeError` otherwise.
  *
- * @param arg Any value.
- * @param name The name for the expression of `arg`.
+ * @param arg The value that's expected to be included within `choices`.
+ * @param name An expression name to be put in the `TypeError`'s message.
  * @param choices An array containing the posible values `arg` should have in order for an error not
  * to be thrown.
+ * @param shallow Whether or not to use shallow equality (default deep equality is powered by 
+   `@santi100/equal-lib` 😉).
  */
-export function assertOneOf(arg: any, name: string, choices: any[]) {
-	if (indexOf(choices, arg) === -1)
+export function assertOneOf<T = unknown>(arg: any, name: string, choices: T[], shallow = false) {
+	if (shallow ? choices.indexOf(arg) : indexOf(choices, arg) === -1)
 		throw new TypeError(
 			`"${name}" must be one of "${choices.join(
 				', '
@@ -141,7 +143,7 @@ function __isInteger(n: number) {
  * Asserts `arg` is an integer. Throws a `TypeError` otherwise.
  *
  * @param arg Any number.
- * @param name The name for the expression for `arg`.
+ * @param name An optional expression name to be put in the `TypeError`'s message. Defaults to "arg".
  */
 export function assertInteger(arg: number, name = 'arg') {
 	if (!__isInteger(arg))
@@ -150,16 +152,16 @@ export function assertInteger(arg: number, name = 'arg') {
 		);
 }
 /**
- * Asserts `arg` is bigger or equal than `min`. Throws a `RangeError` otherwise.
+ * Asserts `arg` is bigger than or equal than `min`. Throws a `RangeError` otherwise.
  *
  * @param arg Any value.
- * @param name The name of the expression for `arg`.
+ * @param name An expression name to be put in the `TypeError`'s message.
  * @param min The minimum value for `arg`.
  */
 export function assertMin(arg: any, name: string, min: any) {
 	if (arg < min)
 		throw new RangeError(
-			`"${name}" must be bigger than ${min}. Got "${arg}" of type "${typeof arg}".`
+			`"${name}" must be bigger than or equal to ${min}. Got "${arg}" of type "${typeof arg}".`
 		);
 }
 
@@ -167,20 +169,21 @@ export function assertMin(arg: any, name: string, min: any) {
  * Asserts `arg` is smaller or equal than `max`. Throws a `RangeError` otherwise.
  *
  * @param arg Any value.
- * @param name The name of the expression for `arg`.
+ * @param name An expression name to be put in the `TypeError`'s message.
+
  * @param max The maximum value for `arg`.
  */
 export function assertMax(arg: any, name: string, max: any) {
 	if (arg > max)
 		throw new RangeError(
-			`"${name}" must be smaller than ${max}. Got "${arg}" of type "${typeof arg}".`
+			`"${name}" must be smaller than or equal to ${max}. Got "${arg}" of type "${typeof arg}".`
 		);
 }
 /**
  * Asserts `arg` is between `min + 1` and `max + 1` (inclusive). Throws a `RangeError` otherwise.
  *
  * @param arg Any value.
- * @param name The name of the expression for `arg`.
+ * @param name An expression name to be put in the `TypeError`'s message. 
  * @param min The minimum value for `arg`.
  * @param max The maximum value for `arg`.
  */
@@ -194,11 +197,66 @@ export function assertRange(arg: any, name: string, min: any, max: any) {
  * Asserts `arg` is an Array. Throws a `TypeError` otherwise.
  *
  * @param arg Any value.
- * @param name The name of the expression for `arg`.
+ * @param name An optional expression name to be put in the `TypeError`'s message. Defaults to "arg".
  */
 export function assertArray(arg: any, name = 'arg') {
 	if (!(arg instanceof Array))
 		throw new TypeError(
 			`"${name}" must be an Array. Got "${arg}" of type "${typeof arg}".`
+		);
+}
+/**
+ * Asserts `arg` is an instance of `clas`. Throws a `TypeError` otherwise.
+ * 
+ * @param arg An object whose class is to be asserted to be `clas`.
+ * @param clas Any valid constructor.
+ * @param name An optional expression name to be put in the `TypeError`'s message. Defaults to "arg".
+ * @since 1.0.8
+ */
+export function assertInstanceOf<T = any>(
+	arg: any,
+	clas: new (...args: any[]) => T,
+	name = 'arg'
+) {
+	try {
+		new clas();
+	} catch (_) {
+		throw new TypeError(
+			`"clas" must be a valid constructor. Got ${clas} of type ${typeof clas}.`
+		);
+	}
+	if (!(arg instanceof clas))
+		throw new TypeError(
+			`${name} must be an instance of ${
+				clas.name
+			}. Got ${arg} of type ${typeof arg}.`
+		);
+}
+/**
+ * Asserts `arg` is smaller than `max`. Throws a `TypeError` otherwise.
+ * 
+ * @param arg The value whose value is to be asserted to be smaller than `max`.
+ * @param max The maximum value `arg` is allowed to have.
+ * @param name An optional expression name to be put in the `TypeError`'s message. Defaults to "arg".
+ * @since 1.0.8
+ */
+export function assertExclusiveMax(arg: any, max: any, name = 'arg') {
+	if (arg >= max)
+		throw new TypeError(
+			`"${name}" must be smaller than ${max}. Got ${arg} of type ${typeof arg}.`
+		);
+}
+/**
+ * Asserts `arg` is bigger than `min`. Throws a `TypeError` otherwise.
+ * 
+ * @param arg The value whose value is to be asserted to be bigger than `max`.
+ * @param min The minimum value `arg` is allowed to have.
+ * @param name An optional expression name to be put in the `TypeError`'s message. Defaults to "arg".
+ * @since 1.0.8
+ */
+export function assertExclusiveMin(arg: any, min: any, name = 'arg') {
+	if (arg <= min)
+		throw new TypeError(
+			`"${name}" must be bigger than ${min}. Got ${arg} of type ${typeof arg}.`
 		);
 }

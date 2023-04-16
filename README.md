@@ -1,26 +1,31 @@
-# Santi's Assertion Library 
+# Santi's Assertion Library
 
 [![Build Status](https://github.com/santi100a/assertion-lib/actions/workflows/test.yml/badge.svg)](https://github.com/santi100a/assertion-lib/actions)
 [![npm homepage](https://img.shields.io/npm/v/@santi100/assertion-lib)](https://npmjs.org/package/@santi100/assertion-lib)
 [![GitHub stars](https://img.shields.io/github/stars/santi100a/assertion-lib.svg)](https://github.com/santi100a/assertion-lib)
 [![License](https://img.shields.io/github/license/santi100a/assertion-lib.svg)](https://github.com/santi100a/assertion-lib)
 [![Bundlephobia stats](https://img.shields.io/bundlephobia/min/@santi100/assertion-lib)](https://bundlephobia.com/package/@santi100/assertion-lib@latest)
+
 - 🚀 Lightweight and fast^
-- 👴 ES3-compliant*
+- 👴 ES3-compliant\*
 - 💻 Portable between the browser and Node.js
 
-**Hasn't been tested in an actual ES3 environment. Feel free to open an issue or pull request if you find any non-ES3 thing. See "Contribute" for instructions on how to do so.*
+\*_Hasn't been tested in an actual ES3 environment. Feel free to open an issue or pull request if you find any non-ES3 thing. See "Contribute" for instructions on how to do so._
 
-*^The source code is about 2 kilobytes.*
+_^The source code is about 2 kilobytes._
 
 ## What's this?
+
 This is an assertion library for types and conditions. It's designed to be lightweight and portable between
 the browser and Node.js.
+
 ## Contribute
 
 Wanna contribute? [File an issue](https://github.com/santi100a/assertion-lib/issues) or [pull request](https://github.com/santi100a/assertion-lib/pulls)!
 Make sure you follow the [contribution Code of Conduct](https://github.com/santi100a/assertion-lib/blob/main/CODE_OF_CONDUCT.md).
+
 ## Installation
+
 - Via NPM: `npm install @santi100/assertion-lib`
 - Via Yarn: `yarn add @santi100/assertion-lib`
 - Via PNPM: `pnpm install @santi100/assertion-lib`
@@ -28,160 +33,188 @@ Make sure you follow the [contribution Code of Conduct](https://github.com/santi
 ### API
 
 - `function assert(condition: boolean, { expected, actual, operator }?: AssertOptionalParams): void;`
-Asserts that `condition` is truthy. Throws an `AssertionError` otherwise.
+  Asserts that `condition` is truthy. Throws an `AssertionError` otherwise.
+  |       Parameter         |            Type              |               Description                 |
+  |-------------------------|------------------------------|-------------------------------------------|
+  | `condition`             | `boolean`                    | The condition to assert.                  |
+  | `assertParams`          | `AssertOptionalParams<E, A>` | `AssertionError` options.                 |
+  | `assertParams.expected` | `E`                          | Expected value for the assertion.         |
+  | `assertParams.actual`   | `A`                          | Received value for the assertion.         |
+  | `assertParams.operator` | `string`                     | Optional operator used for the assertion. |
 
-- `function assertType(val: unknown, expectedType: string): void;`
-Asserts that the type of `val` is `expectedType`. Throws an `AssertionError` otherwise.
 
-- `function assertTypeOf(arg: any, expectedType: Type, name: string): void;` (since 1.0.6)
-Asserts that the type of `arg` is `expectedType`. Throws a `TypeError` otherwise.
+- ~~`function assertType(val: unknown, expectedType: Type): void;`~~ (deprecated as per 1.0.8)
+  Asserts that the type of `val` is `expectedType`. Throws an `AssertionError` otherwise.
+  |       Parameter         |            Type              |               Description                 |
+  |-------------------------|------------------------------|-------------------------------------------|
+  | `val`                   | `unknown`                    | An expression whose type is to be asserted.                  |
+  | `expectedType`          | `Type`                       | The type to assert.                       |
+**DEPRECATED: Use `assertTypeOf` instead.**
 
-- `function assertOneOf(arg: any, name: string, choices: any[]): void;` (since 1.0.6)
-Asserts `arg` is one of `choices`.  Throws a `TypeError` otherwise.
+- `function assertTypeOf(arg: any, expectedType: Type, name: string): void;` (since 1.0.6, `name` is optional since 1.0.8)
+  Asserts that the type of `arg` is `expectedType`. Throws a `TypeError` otherwise.
+  |       Parameter         |            Type              |               Description                 |
+  |-------------------------|------------------------------|-------------------------------------------|
+  | `arg`                   | `any`                        | An expression whose type is to be asserted.                 |
+  | `expectedType`          | `Type`                       | The expected type.                        |
+  | `name`                  | `string`                     |  An optional expression name to be put in the `TypeError`'s message. Defaults to "arg". |
+
+
+- `function assertOneOf(arg: any, name: string, choices: any[]): void;` (since 1.0.6, type param bound to `choices` added in 1.0.8)
+  Asserts `arg` is one of `choices`. Throws a `TypeError` otherwise.
+
+  |       Parameter          |            Type              |               Description                 |
+  |--------------------------|------------------------------|-------------------------------------------|
+  | `arg`                    | `any`                        | The value that's expected to be included within `choices`.                 |
+  | `name`                   | `string`                     |  An expression name to be put in the `TypeError`'s message.     |
+  | `choices`                | `any[]`                      | An array containing the posible values `arg` should have in order for an error not to be thrown.                                                  |
+  | `shallow?` (since 1.0.8) | `boolean` or `undefined`     | Whether or not to use shallow equality (default deep equality is powered by [`@santi100/equal-lib`](https://github.com/santi100a/equal-lib) 😉).
+
 
 - `function assertInteger(arg: number, name: string): void;` (since 1.0.6)
-Asserts `arg` is an integer. Throws a `TypeError` otherwise.
+  Asserts `arg` is an integer. Throws a `TypeError` otherwise.
+  
 
 - `function assertMin(arg: any, name: string, min: any): void;` (since 1.0.6)
-Asserts `arg` is bigger or equal than `min`. Throws a `TypeError` otherwise.
+  Asserts `arg` is bigger or equal than `min`. Throws a `TypeError` otherwise.
 
 - `function assertMax(arg: any, name: string, max: any): void;` (since 1.0.6)
-Asserts `arg` is smaller or equal than `max`. Throws a `TypeError` otherwise.
+  Asserts `arg` is smaller or equal than `max`. Throws a `TypeError` otherwise.
 
 - `function assertRange(arg: any, name: string, min: any, max: any): void;` (since 1.0.6)
-Asserts `arg` is between `min + 1` and `max + 1` (inclusive). Throws a `TypeError` 
-(`RangeError` since 1.0.7) otherwise.
+  Asserts `arg` is between `min + 1` and `max + 1` (inclusive). Throws a `TypeError`
+  (`RangeError` since 1.0.7) otherwise.
 - `function assertArray(arg: any, name?: string): void;` (since 1.0.7)
-Asserts `arg` is an Array. Throws a `TypeError` otherwise.
+  Asserts `arg` is an Array. Throws a `TypeError` otherwise.
 
 ## Usage example
+
 ```typescript
 import {
-  assert,
-  assertType,
-  assertTypeOf,
-  assertOneOf,
-  assertInteger,
-  assertMin,
-  assertMax,
-  AssertionError,
-  Type,
+	assert,
+	assertType,
+	assertTypeOf,
+	assertOneOf,
+	assertInteger,
+	assertMin,
+	assertMax,
+	AssertionError,
+	Type
 } from '@santi100/assertion-lib'; // ESM
 const {
-  assert,
-  assertType,
-  assertTypeOf,
-  assertOneOf,
-  assertInteger,
-  assertMin,
-  assertMax,
-  AssertionError,
-  Type,
+	assert,
+	assertType,
+	assertTypeOf,
+	assertOneOf,
+	assertInteger,
+	assertMin,
+	assertMax,
+	AssertionError,
+	Type
 } = require('@santi100/assertion-lib'); // CJS
 
 function sum(a: number, b: number) {
-  assertType(a, 'number');
-  assertType(b, 'number');
+	assertType(a, 'number');
+	assertType(b, 'number');
 
-  return a + b;
+	return a + b;
 }
 
 function divide(a: number, b: number) {
-  assertType(a, 'number');
-  assertType(b, 'number');
-  assert(b !== 0, { expected: 'non-zero number', actual: b, operator: '!==' });
+	assertType(a, 'number');
+	assertType(b, 'number');
+	assert(b !== 0, { expected: 'non-zero number', actual: b, operator: '!==' });
 
-  return a / b;
+	return a / b;
 }
 
 function getGreeting(name: string, language: string) {
-  assertType(name, 'string');
-  assertOneOf(language, 'language', ['en', 'es']);
+	assertType(name, 'string');
+	assertOneOf(language, 'language', ['en', 'es']);
 
-  const greetings = {
-    en: 'Hello',
-    es: 'Hola',
-  };
+	const greetings = {
+		en: 'Hello',
+		es: 'Hola'
+	};
 
-  return `${greetings[language]}, ${name}!`;
+	return `${greetings[language]}, ${name}!`;
 }
 
 function getFactorial(n: number) {
-  assertType(n, 'number');
-  assertInteger(n, 'n');
-  assertMin(n, 'n', 0);
+	assertType(n, 'number');
+	assertInteger(n, 'n');
+	assertMin(n, 'n', 0);
 
-  let result = 1;
-  for (let i = 2; i <= n; i++) {
-    result *= i;
-  }
+	let result = 1;
+	for (let i = 2; i <= n; i++) {
+		result *= i;
+	}
 
-  return result;
+	return result;
 }
 
 try {
-  // Example of a failed assertion:
-  assert(1 === 2);
+	// Example of a failed assertion:
+	assert(1 === 2);
 } catch (error) {
-  if (error instanceof AssertionError) {
-    console.log('Expected:', error.expected); // 2
-    console.log('Actual:', error.actual); // 1
-    console.log('Operator:', error.operator); // '==='
-  }
+	if (error instanceof AssertionError) {
+		console.log('Expected:', error.expected); // 2
+		console.log('Actual:', error.actual); // 1
+		console.log('Operator:', error.operator); // '==='
+	}
 }
 
 try {
-  // Example of a type assertion:
-  assertType('hello', 'number');
+	// Example of a type assertion:
+	assertType('hello', 'number');
 } catch (error) {
-  if (error instanceof AssertionError) {
-    console.log(error.message); // 'Assertion failed! Expected number. Got string when using operator typeof.'
-  }
+	if (error instanceof AssertionError) {
+		console.log(error.message); // 'Assertion failed! Expected number. Got string when using operator typeof.'
+	}
 }
 
 try {
-  // Example of an assertion with custom error parameters:
-  divide(10, 0);
+	// Example of an assertion with custom error parameters:
+	divide(10, 0);
 } catch (error) {
-  if (error instanceof AssertionError) {
-    console.log(error.message); // 'Assertion failed! Expected non-zero number. Got 0 when using operator !==.'
-  }
+	if (error instanceof AssertionError) {
+		console.log(error.message); // 'Assertion failed! Expected non-zero number. Got 0 when using operator !==.'
+	}
 }
 
 try {
-  // Example of an assertion with one of:
-  getGreeting('John', 'fr');
+	// Example of an assertion with one of:
+	getGreeting('John', 'fr');
 } catch (error) {
-  if (error instanceof TypeError) {
-    console.log(error.message); // '"language" must be one of "en, es". Got "fr" of type "string".'
-  }
+	if (error instanceof TypeError) {
+		console.log(error.message); // '"language" must be one of "en, es". Got "fr" of type "string".'
+	}
 }
 
 try {
-  // Example of an integer assertion:
-  getFactorial(3.5);
+	// Example of an integer assertion:
+	getFactorial(3.5);
 } catch (error) {
-  if (error instanceof TypeError) {
-    console.log(error.message); // '"n" must be an integer. Got "3.5" of type "number".'
-  }
+	if (error instanceof TypeError) {
+		console.log(error.message); // '"n" must be an integer. Got "3.5" of type "number".'
+	}
 }
 
 try {
-  // Example of a minimum assertion:
-  getFactorial(-1);
+	// Example of a minimum assertion:
+	getFactorial(-1);
 } catch (error) {
-  if (error instanceof TypeError) {
-    console.log(error.message); // '"n" must be bigger than 0. Got "-1" of type "number".'
-  }
+	if (error instanceof TypeError) {
+		console.log(error.message); // '"n" must be bigger than 0. Got "-1" of type "number".'
+	}
 }
 
 try {
-  // Example of a maximum assertion:
-  assertMax(10, 'n', 5);
+	// Example of a maximum assertion:
+	assertMax(10, 'n', 5);
 } catch (error) {
-  if (error instanceof TypeError) {
-    console.log(error.message); // '"n" must be smaller than 5. Got "10" of type "number".'
-  }
+	if (error instanceof TypeError) {
+		console.log(error.message); // '"n" must be smaller than 5. Got "10" of type "number".'
+	}
 }
-
 ```
