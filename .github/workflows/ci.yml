@@ -17,6 +17,18 @@ jobs:
           node-version: 19.x
           always-auth: true
 
+      - name: Check commit message
+        run: |
+         COMMIT_MSG=$(git log --format=%B -n 1 HEAD)
+         STRING=$(echo $COMMIT_MSG | grep "infra\:|docs\:|lint\:")
+
+         if [ $STRING ]; then
+          echo "This commit will NOT trigger a release."
+          echo "IS_RELEASE_COMMIT=0" >> $GITHUB_ENV
+         else 
+          echo "IS_RELEASE_COMMIT=1" >> $GITHUB_ENV
+         fi
+
       - name: Install dependencies
         run: yarn
 
@@ -35,6 +47,7 @@ jobs:
       - name: Run test suites
         run: yarn test
   release:
+    if: env.IS_RELEASE_COMMIT == "1"
     permissions:
       contents: write
     needs: test
