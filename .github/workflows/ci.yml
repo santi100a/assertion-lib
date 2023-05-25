@@ -21,7 +21,7 @@ jobs:
         id: commit
         run: |
          COMMIT_MSG=$(git log --format=%B -n 1 HEAD)
-         STRING=$(echo $COMMIT_MSG | grep "infra\:|docs\:|lint\:")
+         STRING=$(echo $COMMIT_MSG | (grep "infra\:|docs\:|lint\:" || echo ''))
 
          if [ $STRING ]; then
           echo "This commit will NOT trigger a release."
