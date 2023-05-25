@@ -24,13 +24,13 @@ jobs:
          STRING=$(echo $COMMIT_MSG | (grep -E "infra\:|docs\:|lint\:" || echo ''))
 
          if [ -z "$STRING" ]; then
-          echo "This commit will NOT trigger a release."
-          
-          echo "IS_RELEASE_COMMIT=0" >> $GITHUB_OUTPUT
-          echo "IS_RELEASE_COMMIT=0" >> $GITHUB_ENV
-         else 
           echo "IS_RELEASE_COMMIT=1" >> $GITHUB_OUTPUT
           echo "IS_RELEASE_COMMIT=1" >> $GITHUB_ENV
+         else 
+          echo "This commit will NOT trigger a release."
+
+          echo "IS_RELEASE_COMMIT=0" >> $GITHUB_OUTPUT
+          echo "IS_RELEASE_COMMIT=0" >> $GITHUB_ENV
          fi
         
 

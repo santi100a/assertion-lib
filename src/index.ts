@@ -190,7 +190,7 @@ export function assertMax(arg: unknown, name: string, max: unknown) {
  * @param max The maximum value for `arg`.
  */
 export function assertRange(arg: unknown, name: string, min: unknown, max: unknown) {
-	// @ts-expect-error: It's alright to have these be any type.
+	// @ts-expect-error: It's alright to have these be any type. 
 	if (arg > max || arg < min)
 		throw new RangeError(
 			`"${name}" must be smaller than ${max} and bigger than ${min}. Got "${arg}" of type "${typeof arg}".`
