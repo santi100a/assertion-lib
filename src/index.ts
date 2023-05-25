@@ -128,7 +128,12 @@ export function assertTypeOf(arg: unknown, expectedType: Type, name = 'arg') {
  * @param shallow Whether or not to use shallow equality (default deep equality is powered by 
    `@santi100/equal-lib` 😉).
  */
-export function assertOneOf<T = unknown>(arg: unknown, name: string, choices: T[], shallow = false) {
+export function assertOneOf<T = unknown>(
+	arg: unknown,
+	name: string,
+	choices: T[],
+	shallow = false
+) {
 	if (shallow ? choices.indexOf(arg as T) : indexOf(choices, arg) === -1)
 		throw new TypeError(
 			`"${name}" must be one of "${choices.join(
@@ -185,11 +190,16 @@ export function assertMax(arg: unknown, name: string, max: unknown) {
  * Asserts `arg` is between `min + 1` and `max + 1` (inclusive). Throws a `RangeError` otherwise.
  *
  * @param arg Any value.
- * @param name An expression name to be put in the `TypeError`'s message. 
+ * @param name An expression name to be put in the `TypeError`'s message.
  * @param min The minimum value for `arg`.
  * @param max The maximum value for `arg`.
  */
-export function assertRange(arg: unknown, name: string, min: unknown, max: unknown) {
+export function assertRange(
+	arg: unknown,
+	name: string,
+	min: unknown,
+	max: unknown
+) {
 	// @ts-expect-error: It's alright to have these be any type.
 	if (arg > max || arg < min)
 		throw new RangeError(
@@ -210,7 +220,7 @@ export function assertArray(arg: unknown, name = 'arg') {
 }
 /**
  * Asserts `arg` is an instance of `clas`. Throws a `TypeError` otherwise.
- * 
+ *
  * @param arg An object whose class is to be asserted to be `clas`.
  * @param clas Any valid constructor.
  * @param name An optional expression name to be put in the `TypeError`'s message. Defaults to "arg".
@@ -237,7 +247,7 @@ export function assertInstanceOf<T = unknown>(
 }
 /**
  * Asserts `arg` is smaller than `max`. Throws a `TypeError` otherwise.
- * 
+ *
  * @param arg The value whose value is to be asserted to be smaller than `max`.
  * @param max The maximum value `arg` is allowed to have.
  * @param name An optional expression name to be put in the `TypeError`'s message. Defaults to "arg".
@@ -252,7 +262,7 @@ export function assertExclusiveMax(arg: unknown, max: unknown, name = 'arg') {
 }
 /**
  * Asserts `arg` is bigger than `min`. Throws a `TypeError` otherwise.
- * 
+ *
  * @param arg The value whose value is to be asserted to be bigger than `max`.
  * @param min The minimum value `arg` is allowed to have.
  * @param name An optional expression name to be put in the `TypeError`'s message. Defaults to "arg".

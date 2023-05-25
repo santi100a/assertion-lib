@@ -20,8 +20,8 @@ jobs:
       - name: Check commit message
         id: commit
         run: |
-         COMMIT_MSG=$(git log --format=%B -n 1 HEAD)
-         STRING=$(echo $COMMIT_MSG | (grep -E "infra\:|docs\:|lint\:" || echo ''))
+         COMMIT_MSG=$(/usr/bin/git log --format=%B -n 1 HEAD)
+         STRING=$(echo $COMMIT_MSG | (grep -E "infra:|docs:|lint:|code-style:" || echo ''))
 
          if [ -z "$STRING" ]; then
           echo "IS_RELEASE_COMMIT=1" >> $GITHUB_OUTPUT
