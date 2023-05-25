@@ -259,7 +259,7 @@ export function assertExclusiveMax(arg: unknown, max: unknown, name = 'arg') {
  * @since 1.0.8
  */
 export function assertExclusiveMin(arg: unknown, min: unknown, name = 'arg') {
-	// @ts-expect-error: It's alright to have these be any type. 
+	// @ts-expect-error: It's alright to have these be any type.
 	if (arg <= min)
 		throw new TypeError(
 			`"${name}" must be bigger than ${min}. Got ${arg} of type ${typeof arg}.`
