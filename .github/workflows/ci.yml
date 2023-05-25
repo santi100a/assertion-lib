@@ -21,13 +21,16 @@ jobs:
         id: commit
         run: |
          COMMIT_MSG=$(git log --format=%B -n 1 HEAD)
-         STRING=$(echo $COMMIT_MSG | (grep "infra\:|docs\:|lint\:" || echo ''))
+         STRING=$(echo $COMMIT_MSG | (grep -E "infra\:|docs\:|lint\:" || echo ''))
 
          if [ $STRING ]; then
           echo "This commit will NOT trigger a release."
+          
           echo "IS_RELEASE_COMMIT=0" >> $GITHUB_OUTPUT
+          echo "IS_RELEASE_COMMIT=0" >> $GITHUB_ENV
          else 
           echo "IS_RELEASE_COMMIT=1" >> $GITHUB_OUTPUT
+          echo "IS_RELEASE_COMMIT=1" >> $GITHUB_ENV
          fi
         
 
@@ -35,18 +38,22 @@ jobs:
         run: yarn
 
       - name: Validate Markdown links
+
         run: yarn check-links
 
       - name: Validate package.json
         run: yarn validate-package-json
 
       - name: Run ESLint
+        if: env.IS_RELEASE_COMMIT == '1'
         run: yarn lint
 
       - name: Build source code
+        if: env.IS_RELEASE_COMMIT == '1'
         run: yarn build
 
       - name: Run test suites
+        if: env.IS_RELEASE_COMMIT == '1'
         run: yarn test
   release:
     if: needs.test.outputs.IS_RELEASE_COMMIT == '1'
