@@ -23,7 +23,7 @@ jobs:
          COMMIT_MSG=$(git log --format=%B -n 1 HEAD)
          STRING=$(echo $COMMIT_MSG | (grep -E "infra\:|docs\:|lint\:" || echo ''))
 
-         if [ $STRING ]; then
+         if [ -z "$STRING" ]; then
           echo "This commit will NOT trigger a release."
           
           echo "IS_RELEASE_COMMIT=0" >> $GITHUB_OUTPUT
