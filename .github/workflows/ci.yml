@@ -38,23 +38,34 @@ jobs:
         run: yarn
 
       - name: Validate Markdown links
-
         run: yarn check-links
 
       - name: Validate package.json
         run: yarn validate-package-json
 
       - name: Run ESLint
-        if: env.IS_RELEASE_COMMIT == '1'
-        run: yarn lint
+        run: |
+         if [ "$IS_RELEASE_COMMIT" -eq "1" ]; then
+          yarn lint
+         else
+          exit 0
+         fi
 
       - name: Build source code
-        if: env.IS_RELEASE_COMMIT == '1'
-        run: yarn build
+        run: |
+         if [ "$IS_RELEASE_COMMIT" -eq "1" ]; then
+          yarn build
+         else
+          exit 0
+         fi
 
       - name: Run test suites
-        if: env.IS_RELEASE_COMMIT == '1'
-        run: yarn test
+        run: |
+         if [ "$IS_RELEASE_COMMIT" -eq "1" ]; then
+          yarn test
+         else
+          exit 0
+         fi
   release:
     if: needs.test.outputs.IS_RELEASE_COMMIT == '1'
     permissions:
