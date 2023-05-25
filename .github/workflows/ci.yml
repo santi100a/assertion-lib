@@ -47,7 +47,7 @@ jobs:
       - name: Run test suites
         run: yarn test
   release:
-    if: env.IS_RELEASE_COMMIT == "1"
+    if: ${{ env.IS_RELEASE_COMMIT == '1' }}
     permissions:
       contents: write
     needs: test
