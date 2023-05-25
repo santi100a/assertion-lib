@@ -44,6 +44,7 @@ jobs:
         run: yarn validate-package-json
 
       - name: Run ESLint
+        if: env.IS_RELEASE_COMMIT == '1'
         run: |
          if [ "$IS_RELEASE_COMMIT" -eq "1" ]; then
           yarn lint
@@ -52,6 +53,7 @@ jobs:
          fi
 
       - name: Build source code
+        if: env.IS_RELEASE_COMMIT == '1'
         run: |
          if [ "$IS_RELEASE_COMMIT" -eq "1" ]; then
           yarn build
@@ -60,6 +62,7 @@ jobs:
          fi
 
       - name: Run test suites
+        if: env.IS_RELEASE_COMMIT == '1'
         run: |
          if [ "$IS_RELEASE_COMMIT" -eq "1" ]; then
           yarn test
