@@ -9,6 +9,8 @@ on:
 
 jobs:
   test:
+    outputs:
+      IS_RELEASE_COMMIT: ${{ steps.commit.outputs.IS_RELEASE_COMMIT }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -46,29 +48,17 @@ jobs:
       - name: Run ESLint
         if: env.IS_RELEASE_COMMIT == '1'
         run: |
-         if [ "$IS_RELEASE_COMMIT" -eq "1" ]; then
-          yarn lint
-         else
-          exit 0
-         fi
+         yarn lint
 
       - name: Build source code
         if: env.IS_RELEASE_COMMIT == '1'
         run: |
-         if [ "$IS_RELEASE_COMMIT" -eq "1" ]; then
-          yarn build
-         else
-          exit 0
-         fi
+         yarn build
 
       - name: Run test suites
         if: env.IS_RELEASE_COMMIT == '1'
         run: |
-         if [ "$IS_RELEASE_COMMIT" -eq "1" ]; then
-          yarn test
-         else
-          exit 0
-         fi
+         yarn test
   release:
     if: needs.test.outputs.IS_RELEASE_COMMIT == '1'
     permissions:
