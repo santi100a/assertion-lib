@@ -16,13 +16,14 @@ jobs:
         id: comment
         run: |
           yarn init --yes
-          yarn add --optional @octokit/rest
+          yarn add --optional @octokit/rest@20.0.1
           node --eval="
+          (async function() {
             const { Octokit } = require('@octokit/rest');
             const github = new Octokit({ auth: process.env.GITHUB_TOKEN });
-            const issueNumber = "${{ github.event.pull_request.number }}";
-            const owner = "${{ github.repository_owner }}";
-            const repo = "${{ github.repository }}";
+            const issueNumber = '${{ github.event.pull_request.number }}';
+            const owner = '${{ github.repository_owner }}';
+            const repo = '${{ github.repository }}'.replace(owner + '/', '');
 
             const { data: comments } = await github.issues.listComments({
               owner,
@@ -31,6 +32,7 @@ jobs:
             });
 
             console.log(comments.some(comment => comment.body.includes('Hi, ${{ github.actor }}')));
+          })();
             " >> hi.txt
           echo "result=$(cat hi.txt | grep -E 'true|false')" >> $GITHUB_OUTPUT
 
@@ -87,6 +89,9 @@ jobs:
     continue-on-error: true
     needs: test
     if: success()
+    permissions:
+      pull-requests: write
+      issues: write
     steps:
       - name: Set up Node
         uses: actions/setup-node@v3
@@ -94,25 +99,39 @@ jobs:
           node-version: 19.x
 
       - name: Assign pull request to yourself
-        uses: actions/github-script@v5
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const assignResponse = await github.issues.addAssignees({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.payload.pull_request.number,
-              assignees: [context.repo.owner],
-            });
+        run: |
+          yarn init --yes
+          yarn add --optional @octokit/rest@20.0.1
+          node --eval="
+            const { Octokit } = require('@octokit/rest');
+            const github = new Octokit({ auth: process.env.GITHUB_TOKEN });
+            (async function() {
+              await github.issues.addAssignees({
+                owner: '${{ github.repository_owner }}',
+                repo: '${{ github.repository }}'.replace('${{ github.repository_owner }}/', ''),
+                issue_number: ${{ github.event.pull_request.number }},
+                assignees: ['${{ github.repository_owner }}'],
+              });
+            })();
+          "
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Request code review
-        uses: actions/github-script@v5
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const requestReviewResponse = await github.rest.pulls.createReviewRequest({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.payload.pull_request.number,
-              reviewers: [context.repo.owner],
-            });
+        run: |
+          yarn init --yes
+          yarn add --optional @octokit/rest@20.0.1
+          node --eval="
+            const { Octokit } = require('@octokit/rest');
+            const github = new Octokit({ auth: process.env.GITHUB_TOKEN });
+            (async function() {
+              await github.pulls.requestReviewers({
+                owner: '${{ github.repository_owner }}',
+                repo: '${{ github.repository }}'.replace('${{ github.repository_owner }}/', ''),
+                pull_number: ${{ github.event.pull_request.number }},
+                reviewers: ['${{ github.repository_owner }}'],
+              });
+            })();
+          "
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
