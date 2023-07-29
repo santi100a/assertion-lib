@@ -3,11 +3,8 @@ name: Pull Request check
 on:
   pull_request:
     types:
-      - edited
       - opened
       - synchronize
-    paths:
-      - src/**/*.*
 jobs:
   test:
     permissions:
