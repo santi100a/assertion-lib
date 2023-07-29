@@ -13,3 +13,9 @@
 
 - Added `assertInstanceOf`, `assertMaxExclusive` and `assertMinExclusive`.
 - Modified `randomFromArray` to make sure TypeScript enforces there's at least one element in the input array.
+
+## Version 2.0.0 (MAJOR VERSION; BREAKING CHANGES!)
+
+- **DELETED `assertType`.**
+- **Replaced `assertOneOf`'s  `shallow` parameter with `comparator` to remove reliance on `@santi100/equal-lib`.**
+- Modified module system to use `export =` for all individual module files, whilst keeping compatibility.
