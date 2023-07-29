@@ -10,6 +10,10 @@
     "lightweight",
     "es3"
   ],
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/santi100a"
+  },
   "description": "Santi's Assertion Library: Quick and reliable assertions!",
   "license": "MIT",
   "author": "santi100a <santyrojasprieto9@gmail.com>",
