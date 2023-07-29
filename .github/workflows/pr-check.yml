@@ -20,7 +20,7 @@ jobs:
           script: |
             const issueNumber = "${{ github.event.pull_request.number }}";
 
-            const { data: comments } = await github.rest.issues.listComments({
+            const { data: comments } = await github.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issueNumber,
@@ -57,16 +57,16 @@ jobs:
 
       - name: Validate package.json
         run: yarn validate-package-json
-      
+
       - name: Validate Markdown links
         run: yarn check-links
 
       - name: Run ESLint
         run: yarn lint
-        
+
       - name: Build code
         run: yarn build
-      
+
       - name: Run main test suites
         run: yarn test
 
@@ -82,19 +82,33 @@ jobs:
     needs: test
     if: success()
     steps:
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 19.x
+
       - name: Check CI status
         id: ci-check
-        uses: actions/github-script@v5
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
+        run: |
+          yarn init --yes
+          yarn add --optional @octokit/rest@20.0.1
+          node --eval=" \
+          (async function() {
+            const { Octokit } = require('@octokit/rest');
+            const github = new Octokit({ auth: process.env.GITHUB_TOKEN });
+
             const { data } = await github.checks.listForRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: context.payload.pull_request.head.sha,
             });
             const latestCheck = data.check_runs[0];
-            return latestCheck.conclusion === 'success';
+            console.log(latestCheck.conclusion === 'success');
+          })();
+          " > tmp.txt
+          echo "result=$(cat tmp.txt | grep -E 'true|false')" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Assign pull request to yourself
         if: steps.ci-check.outputs.result == 'true'
@@ -115,7 +129,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const requestReviewResponse = await github.pulls.createReviewRequest({
+            const requestReviewResponse = await github.rest.pulls.createReviewRequest({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.payload.pull_request.number,
