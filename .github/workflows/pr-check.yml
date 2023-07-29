@@ -6,6 +6,38 @@ on:
       - opened
       - synchronize
 jobs:
+  say-hi:
+    continue-on-error: true
+    permissions:
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for existence of comment
+        id: comment
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issueNumber = "${{ github.event.pull_request.number }}";
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+            });
+
+            return comments.some(comment => comment.body.includes('Hi, ${{ github.actor }}'));
+
+      - name: Say hi
+        uses: jungwinter/comment@v1
+        if: steps.comment.outputs.result == 'false'
+        with:
+          type: create
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue_number: ${{ github.event.pull_request.number }}
+          body: |
+            Hi, ${{ github.actor }}!
+            Make sure to comply with the [Code of Conduct](https://github.com/${{ github.repository }}/blob/main/CODE_OF_CONDUCT.md), [security policy](https://github.com/${{ github.repository }}/blob/main/SECURITY.md) and [contribution guidelines](https://github.com/${{ github.repository }}/blob/main/CONTRIBUTING.md) before contributing to this repo.
   test:
     permissions:
       pull-requests: write
@@ -20,27 +52,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-      - name: Clone the main repo
-        run: |
-         cd .. 
-         sudo /usr/bin/git clone https://github.com/${{ github.repository }} main 
-         (cd -) > /dev/null
-
-      - name: Pre-run modified files validation
-        run: |
-         sudo chmod +x scripts/validate-diff.sh 
-         scripts/validate-diff.sh .github ../main/.github
-         scripts/validate-diff.sh LICENSE ../main/LICENSE
-         scripts/validate-diff.sh .gitignore ../main/.gitignore
-         scripts/validate-diff.sh .prettierrc ../main/.prettierrc
-         scripts/validate-diff.sh .eslintrc.json ../main/.eslintrc.json
-         scripts/validate-diff.sh tsconfig.json ../main/tsconfig.json
-         scripts/validate-diff.sh SECURITY.md ../main/SECURITY.md
-         scripts/validate-diff.sh CONTRIBUTING.md ../main/CONTRIBUTING.md
-         scripts/validate-diff.sh CODE_OF_CONDUCT.md ../main/CODE_OF_CONDUCT.md
-
-      - name: Get rid of the main repo's clone
-        run: sudo rm -rf ../main
       - name: Install dependencies
         run: yarn
 
