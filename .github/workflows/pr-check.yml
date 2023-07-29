@@ -14,21 +14,25 @@ jobs:
     steps:
       - name: Check for existence of comment
         id: comment
-        uses: actions/github-script@v5
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
+        run: |
+          yarn init --yes
+          yarn add --optional @octokit/rest
+          node --eval="
+            const { Octokit } = require('@octokit/rest');
+            const github = new Octokit({ auth: process.env.GITHUB_TOKEN });
             const issueNumber = "${{ github.event.pull_request.number }}";
             const owner = "${{ github.repository_owner }}";
             const repo = "${{ github.repository }}";
 
             const { data: comments } = await github.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
+              owner,
+              repo,
               issue_number: issueNumber,
             });
 
-            return comments.some(comment => comment.body.includes('Hi, ${{ github.actor }}'));
+            console.log(comments.some(comment => comment.body.includes('Hi, ${{ github.actor }}')));
+            " >> hi.txt
+          echo "result=$(cat hi.txt | grep -E 'true|false')" >> $GITHUB_OUTPUT
 
       - name: Say hi
         uses: jungwinter/comment@v1
@@ -90,7 +94,6 @@ jobs:
           node-version: 19.x
 
       - name: Assign pull request to yourself
-        if: steps.ci-check.outputs.result == 'true'
         uses: actions/github-script@v5
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -103,7 +106,6 @@ jobs:
             });
 
       - name: Request code review
-        if: steps.ci-check.outputs.result == 'true'
         uses: actions/github-script@v5
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
