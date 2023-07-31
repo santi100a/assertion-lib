@@ -8,7 +8,11 @@ import assertTypeOf = require('./type-of');
  * @param choices An array containing the posible values `arg` should have in order for an error not
  * to be thrown.
  */
-function assertOneOf<T = unknown>(arg: unknown, name: string, choices: T[]): void;
+function assertOneOf<T = unknown>(
+	arg: unknown,
+	name: string,
+	choices: T[]
+): void;
 
 /**
  * Asserts `arg` is one of `choices`, using `comparator` to compare `arg` against each choice.

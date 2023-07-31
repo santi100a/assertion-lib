@@ -1,9 +1,12 @@
 {
   "name": "@santi100/assertion-lib",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "cjs/index.js",
   "typings": "cjs/index.d.ts",
   "module": "./index.mjs",
+  "description": "Santi's Assertion Library: Quick and reliable assertions!",
+  "license": "MIT",
+  "author": "santi100a <santyrojasprieto9@gmail.com>",
   "keywords": [
     "assertion",
     "type-assertion",
@@ -14,27 +17,21 @@
     "type": "github",
     "url": "https://github.com/sponsors/santi100a"
   },
-  "description": "Santi's Assertion Library: Quick and reliable assertions!",
-  "license": "MIT",
-  "author": "santi100a <santyrojasprieto9@gmail.com>",
   "repository": {
     "url": "https://github.com/santi100a/assertion-lib.git",
     "type": "git"
   },
-  "dependencies": {
-    "@santi100/equal-lib": "^1.0.8",
+  "devDependencies": {
     "remark-cli": "^11.0.0",
     "remark-gfm": "^3.0.1",
-    "remark-validate-links": "^12.1.1"
-  },
-  "devDependencies": {
+    "remark-validate-links": "^12.1.1",
     "@types/jest": "^29.5.2",
-    "@typescript-eslint/eslint-plugin": "^5.59.7",
+    "@typescript-eslint/eslint-plugin": "^6.2.1",
     "@typescript-eslint/parser": "^5.59.7",
     "eslint": "8.46.0",
     "eslint-plugin-jest": "^27.2.1",
     "jest": "^29.5.0",
-    "prettier": "^2.8.8",
+    "prettier": "^3.0.0",
     "typescript": "4.8.4"
   },
   "scripts": {

@@ -14,8 +14,6 @@ import assertTypeOf = require('./type-of');
 import assertMatch = require('./match');
 import assertDefined = require('./defined');
 
-
-
 export * from './core';
 export {
 	assertArray,
