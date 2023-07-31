@@ -1,5 +1,5 @@
 describe('assertTypeOf', () => {
-    const { assertTypeOf } = require('../cjs/assert-type-of.js');
+    const assertTypeOf  = require('../cjs/type-of');
     test('"assertTypeOf" is a valid function', () => {
         expect(assertTypeOf).toBeInstanceOf(Function);
     });

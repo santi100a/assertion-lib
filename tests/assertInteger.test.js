@@ -1,5 +1,5 @@
 describe('assertInteger', () => {
-    const { assertInteger } = require('../cjs/assert-integer.js');
+    const { assertInteger } = require('../cjs/integer');
     test('"assertInteger" is a valid function', () => {
         expect(assertInteger).toBeInstanceOf(Function);
     });

@@ -11,5 +11,7 @@ import assertOneOf = require('./one-of');
 import assertPositive = require('./positive');
 import assertRange = require('./range');
 import assertTypeOf = require('./type-of');
+import assertMatch = require('./match');
+import assertDefined = require('./defined');
 export * from './core';
-export { assertArray, assert, assertExclusiveMax, assertExclusiveMin, assertInstanceOf, assertInteger, assertMax, assertMin, assertNegative, assertOneOf, assertPositive, assertRange, assertTypeOf };
+export { assertArray, assert, assertExclusiveMax, assertExclusiveMin, assertInstanceOf, assertInteger, assertMax, assertMin, assertNegative, assertOneOf, assertPositive, assertRange, assertTypeOf, assertMatch, assertDefined };

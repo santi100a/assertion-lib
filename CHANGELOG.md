@@ -19,3 +19,7 @@
 - **DELETED `assertType`.**
 - **Replaced `assertOneOf`'s  `shallow` parameter with `comparator` to remove reliance on `@santi100/equal-lib`.**
 - Modified module system to use `export =` for all individual module files, whilst keeping compatibility.
+
+## Version 2.0.1
+
+- Added `assertMatch` and `assertDefined`.

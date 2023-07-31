@@ -49,9 +49,6 @@ Make sure you follow the [contribution Code of Conduct](https://github.com/santi
 
 ### API
 
-**⚠ WARNING:** `assertType`'s documentation is no longer available here, as such function has been removed
-from this library since version 2.0.0.
-
 - `function assert(condition: boolean, params?: AssertOptionalParams): void;`
 
   Asserts that `condition` is truthy. Throws an `AssertionError` otherwise.
@@ -112,124 +109,149 @@ from this library since version 2.0.0.
 
   Asserts `arg` is an Array. Throws a `TypeError` otherwise.
 
+- `function assertDefined<T = unknown>(element: T): void;` (since 2.0.1)
+
+  Checks if a given element is defined, i.e., not null or undefined.
+  If the element is null or undefined, the function throws a TypeError with a message indicating the name of the element.
+
+  | Parameter | Type | Description                                | Optional? |
+  | --------- | ---- | ------------------------------------------ | --------- |
+  | `element` | `T`  | The value to be checked for being defined. | No        |
+
+  Throws an error if the element is null or undefined.
+
+  Example:
+
+  ```typescript
+  assertDefined(5); // No error thrown
+  assertDefined(null); // Throws TypeError: 'element' is null
+  assertDefined(undefined); // Throws TypeError: 'element' is undefined
+  assertDefined('hello'); // No error thrown
+  ```
+
+- `function assertMatch(str: string, re: RegExp, name?: string): void;` (since 2.0.1)
+
+  Asserts `str` matches `re`. Throws a `TypeError` otherwise.
+
+  | Parameter          | Type     | Description                                                                | Optional? |
+  | ------------------ | -------- | -------------------------------------------------------------------------- | --------- |
+  | `str`              | `string` | The string to match against `re`.                                          | No        |
+  | `re`               | `RegExp` | The regular expression to match `str` against.                             | No        |
+  | `name`             | `string` | The displayed name in the `TypeError` thrown if `str` does not match `re`. |
+  | Defaults to `str`. | No       |
+
 ## Usage example
 
 ```typescript
-import assertType = require('@santi100/assertion-lib/cjs/type'); // TypeScript for individual functions
-import {
- assert,
- assertTypeOf,
- assertOneOf,
- assertInteger,
- assertMin,
- assertMax,
- AssertionError,
- Type
-} from '@santi100/assertion-lib'; // ESM
-const {
- assert,
- assertTypeOf,
- assertOneOf,
- assertInteger,
- assertMin,
- assertMax,
- AssertionError
-} = require('@santi100/assertion-lib'); // CJS
+// Import the assertion functions
 
-function sum(a: number, b: number) {
- assertType(a, 'number');
- assertType(b, 'number');
+// CJS
+const assert = require('@santi100/assertion-lib/cjs/assert');
+const assertTypeOf = require('@santi100/assertion-lib/cjs/type-of');
+const assertOneOf = require('@santi100/assertion-lib/cjs/one-of');
+const assertInteger = require('@santi100/assertion-lib/cjs/integer');
+const assertMin = require('@santi100/assertion-lib/cjs/min');
+const assertMax = require('@santi100/assertion-lib/cjs/max');
+const assertRange = require('@santi100/assertion-lib/cjs/range');
+const assertArray = require('@santi100/assertion-lib/cjs/array');
+const assertDefined = require('@santi100/assertion-lib/cjs/defined');
+const assertMatch = require('@santi100/assertion-lib/cjs/match');
 
- return a + b;
+// TypeScript
+import assert = require('@santi100/assertion-lib/cjs/assert');
+import assertTypeOf = require('@santi100/assertion-lib/cjs/type-of');
+import assertOneOf = require('@santi100/assertion-lib/cjs/one-of');
+import assertInteger = require('@santi100/assertion-lib/cjs/integer');
+import assertMin = require('@santi100/assertion-lib/cjs/min');
+import assertMax = require('@santi100/assertion-lib/cjs/max');
+import assertRange = require('@santi100/assertion-lib/cjs/range');
+import assertArray = require('@santi100/assertion-lib/cjs/array');
+import assertDefined = require('@santi100/assertion-lib/cjs/defined');
+import assertMatch = require('@santi100/assertion-lib/cjs/match');
+
+// ESM
+import assert from '@santi100/assertion-lib/cjs/assert';
+import assertTypeOf from '@santi100/assertion-lib/cjs/type-of';
+import assertOneOf from '@santi100/assertion-lib/cjs/one-of';
+import assertInteger from '@santi100/assertion-lib/cjs/integer';
+import assertMin from '@santi100/assertion-lib/cjs/min';
+import assertMax from '@santi100/assertion-lib/cjs/max';
+import assertRange from '@santi100/assertion-lib/cjs/range';
+import assertArray from '@santi100/assertion-lib/cjs/array';
+import assertDefined from '@santi100/assertion-lib/cjs/defined';
+import assertMatch from '@santi100/assertion-lib/cjs/match';
+
+// Or import it all
+import * as assertionLib from '@santi100/assertion-lib'; // ESM or TypeScript
+const assertionLib = require('@santi100/assertion-lib'); // CJS
+// Usage example for assert
+function divide(a, b) {
+  assert(typeof a === 'number' && typeof b === 'number', {
+    message: 'Arguments must be numbers.'
+  });
+
+  assert(b !== 0, {
+    message: 'Cannot divide by zero.',
+    expected: 'Non-zero value',
+    actual: b
+  });
+
+  return a / b;
 }
 
-function divide(a: number, b: number) {
- assertType(a, 'number');
- assertType(b, 'number');
- assert(b !== 0, { expected: 'non-zero number', actual: b, operator: '!==' });
+// Usage example for assertTypeOf
+function greet(name) {
+  assertTypeOf(name, 'string', 'name');
 
- return a / b;
+  return `Hello, ${name}!`;
 }
 
-function getGreeting(name: string, language: string) {
- assertType(name, 'string');
- assertOneOf(language, 'language', ['en', 'es']);
-
- const greetings = {
-  en: 'Hello',
-  es: 'Hola'
- };
-
- return `${greetings[language]}, ${name}!`;
+// Usage example for assertOneOf
+function checkOperator(operator) {
+  assertOneOf(operator, 'operator', ['+', '-', '*', '/'], (a, b) => a.trim() === b.trim());
+  return `Valid operator: ${operator}`;
 }
 
-function getFactorial(n: number) {
- assertType(n, 'number');
- assertInteger(n, 'n');
- assertMin(n, 'n', 0);
-
- let result = 1;
- for (let i = 2; i <= n; i++) {
-  result *= i;
- }
-
- return result;
+// Usage example for assertInteger
+function multiplyByTwo(num) {
+  assertInteger(num, 'num');
+  return num * 2;
 }
 
-try {
- // Example of a failed assertion:
- assert(1 === 2);
-} catch (error) {
- if (error instanceof AssertionError) {
-  console.log('Expected:', error.expected); // 2
-  console.log('Actual:', error.actual); // 1
-  console.log('Operator:', error.operator); // '==='
- }
+// Usage example for assertMin
+function greetWithMinimumLength(name) {
+  assertMin(name.length, 'name', 3);
+  return `Hello, ${name}!`;
 }
 
-
-try {
- // Example of an assertion with custom error parameters:
- divide(10, 0);
-} catch (error) {
- if (error instanceof AssertionError) {
-  console.log(error.message); // 'Assertion failed! Expected non-zero number. Got 0 when using operator !==.'
- }
+// Usage example for assertMax
+function greetWithMaximumLength(name) {
+  assertMax(name.length, 'name', 10);
+  return `Hello, ${name}!`;
 }
 
-try {
- // Example of an assertion with one of:
- getGreeting('John', 'fr');
-} catch (error) {
- if (error instanceof TypeError) {
-  console.log(error.message); // '"language" must be one of "en, es". Got "fr" of type "string".'
- }
+// Usage example for assertRange
+function greetWithPreferredLength(name) {
+  assertRange(name.length, 'name', 5, 8);
+  return `Hello, ${name}!`;
 }
 
-try {
- // Example of an integer assertion:
- getFactorial(3.5);
-} catch (error) {
- if (error instanceof TypeError) {
-  console.log(error.message); // '"n" must be an integer. Got "3.5" of type "number".'
- }
+// Usage example for assertArray
+function sumNumbers(numbers) {
+  assertArray(numbers, 'numbers');
+  return numbers.reduce((sum, num) => sum + num, 0);
 }
 
-try {
- // Example of a minimum assertion:
- getFactorial(-1);
-} catch (error) {
- if (error instanceof TypeError) {
-  console.log(error.message); // '"n" must be bigger than 0. Got "-1" of type "number".'
- }
+// Usage example for assertDefined
+function greetIfDefined(name) {
+  assertDefined(name, 'name');
+  return `Hello, ${name}!`;
 }
 
-try {
- // Example of a maximum assertion:
- assertMax(10, 'n', 5);
-} catch (error) {
- if (error instanceof TypeError) {
-  console.log(error.message); // '"n" must be smaller than 5. Got "10" of type "number".'
- }
+// Usage example for assertMatch
+function isValidEmail(email) {
+  assertMatch(email, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i, 'email');
+  return true;
 }
+
 ```

@@ -78,9 +78,11 @@ jobs:
       - name: Run main test suites
         run: yarn test
 
+      - name: Checkout main
+        run: git clone https://github.com/${{ github.repository }} main/ 
       - name: Report build failed (if any)
         if: failure()
-        uses: ./.github/workflows/pr-build-failed.yml
+        uses: ./main/.github/workflows/pr-build-failed.yml
         with:
           pr-author: ${{ github.event.pull_request.user.login }}
           number: ${{ github.event.pull_request.number }}

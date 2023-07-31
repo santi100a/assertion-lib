@@ -1,5 +1,5 @@
 describe('assertNegative_function', () => {
-    const { assertNegative } = require('../cjs/assert-negative.js');
+    const assertNegative = require('../cjs/negative');
 
     // Tests that assertNegative throws a TypeError when passed 0.
     it("test_negative_zero", () => {

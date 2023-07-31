@@ -11,6 +11,10 @@ import assertOneOf = require('./one-of');
 import assertPositive = require('./positive');
 import assertRange = require('./range');
 import assertTypeOf = require('./type-of');
+import assertMatch = require('./match');
+import assertDefined = require('./defined');
+
+
 
 export * from './core';
 export {
@@ -26,5 +30,7 @@ export {
 	assertOneOf,
 	assertPositive,
 	assertRange,
-	assertTypeOf
+	assertTypeOf,
+	assertMatch,
+	assertDefined
 };

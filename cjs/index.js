@@ -14,7 +14,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 exports.__esModule = true;
-exports.assertTypeOf = exports.assertRange = exports.assertPositive = exports.assertOneOf = exports.assertNegative = exports.assertMin = exports.assertMax = exports.assertInteger = exports.assertInstanceOf = exports.assertExclusiveMin = exports.assertExclusiveMax = exports.assert = exports.assertArray = void 0;
+exports.assertDefined = exports.assertMatch = exports.assertTypeOf = exports.assertRange = exports.assertPositive = exports.assertOneOf = exports.assertNegative = exports.assertMin = exports.assertMax = exports.assertInteger = exports.assertInstanceOf = exports.assertExclusiveMin = exports.assertExclusiveMax = exports.assert = exports.assertArray = void 0;
 var assertArray = require("./array");
 exports.assertArray = assertArray;
 var assert = require("./assert");
@@ -41,4 +41,8 @@ var assertRange = require("./range");
 exports.assertRange = assertRange;
 var assertTypeOf = require("./type-of");
 exports.assertTypeOf = assertTypeOf;
+var assertMatch = require("./match");
+exports.assertMatch = assertMatch;
+var assertDefined = require("./defined");
+exports.assertDefined = assertDefined;
 __exportStar(require("./core"), exports);

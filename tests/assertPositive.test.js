@@ -1,5 +1,5 @@
 describe('assertPositive_function', () => {
-    const { assertPositive } = require('../cjs/assert-positive.js');
+    const assertPositive = require('../cjs/positive');
 
     // Tests that assertPositive does not throw when num is zero
     it("test_positive_zero", () => {
