@@ -23,3 +23,7 @@
 ## Version 2.0.1
 
 - Added `assertMatch` and `assertDefined`.
+
+## Version 2.0.2
+
+- Fixed circular dependency bug with `assertTypeOf` and `assertOneOf`.

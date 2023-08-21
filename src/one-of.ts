@@ -1,5 +1,3 @@
-import assertTypeOf = require('./type-of');
-
 /**
  * Asserts `arg` is one of `choices`. Throws a `TypeError` otherwise.
  *
@@ -54,12 +52,14 @@ function assertOneOf<T = unknown>(
 			'The `shallow` argument is no longer valid. Please pass a function instead.'
 		);
 	else if (typeof comparator !== 'function')
-		assertTypeOf(comparator, 'function', 'comparator');
+		throw new TypeError(`"comparator" must be of type "function". Got ${
+			comparator
+		} of type "${typeof comparator}".`);
 	if (__indexOf(choices, arg as T) === -1)
 		throw new TypeError(
-			`"${name}" must be one of "${choices.join(
+			`"${name}" must be one of ${choices.join(
 				', '
-			)}". Got "${arg}" of type "${typeof arg}".`
+			)}. Got "${arg}" of type "${typeof arg}".`
 		);
 }
 assertOneOf.assertOneOf = assertOneOf;
