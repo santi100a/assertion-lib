@@ -1,6 +1,6 @@
 {
-  "name": "@santi100/assertion-lib",
-  "main": "index.js",
-  "license": "MIT",
-  "type": "commonjs"
+	"name": "@santi100a/assertion-lib",
+	"main": "index.js",
+	"license": "MIT",
+	"type": "commonjs"
 }

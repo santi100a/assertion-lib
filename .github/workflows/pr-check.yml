@@ -80,7 +80,7 @@ jobs:
 
       - name: Checkout main
         if: failure()
-        run: git clone https://github.com/${{ github.repository }} main/ 
+        run: git clone https://github.com/${{ github.repository }} main/
       - name: Report build failed (if any)
         if: failure()
         uses: ./main/.github/workflows/pr-build-failed.yml

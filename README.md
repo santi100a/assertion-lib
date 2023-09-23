@@ -9,14 +9,14 @@
 
 [license badge]: https://img.shields.io/github/license/santi100a/assertion-lib.svg
 [build status badge]: https://github.com/santi100a/assertion-lib/actions/workflows/ci.yml/badge.svg
-[npm homepage badge]: https://img.shields.io/npm/v/@santi100/assertion-lib
+[npm homepage badge]: https://img.shields.io/npm/v/@santi100a/assertion-lib
 [gh stars badge]: https://img.shields.io/github/stars/santi100a/assertion-lib.svg
-[bundlephobia badge]: https://img.shields.io/bundlephobia/min/@santi100/assertion-lib
+[bundlephobia badge]: https://img.shields.io/bundlephobia/min/@santi100a/assertion-lib
 [discord badge]: https://img.shields.io/badge/Join%20us%20on%20Discord-7289DA?logo=discord&logoColor=white
 [actions]: https://github.com/santi100a/assertion-lib/actions
-[npm homepage]: https://npmjs.org/package/@santi100/assertion-lib
+[npm homepage]: https://npmjs.org/package/@santi100a/assertion-lib
 [repo]: https://github.com/santi100a/assertion-lib
-[bundlephobia page]: https://bundlephobia.com/package/@santi100/assertion-lib@latest
+[bundlephobia page]: https://bundlephobia.com/package/@santi100a/assertion-lib@latest
 [discord server]: https://discord.com/channels/1110705940459696179/1110706009086902303
 
 - 🚀 Lightweight and fast^
@@ -43,9 +43,9 @@ Make sure you follow the [contribution Code of Conduct](https://github.com/santi
 
 ## Installation
 
-- Via NPM: `npm install @santi100/assertion-lib`
-- Via Yarn: `yarn add @santi100/assertion-lib`
-- Via PNPM: `pnpm install @santi100/assertion-lib`
+- Via NPM: `npm install @santi100a/assertion-lib`
+- Via Yarn: `yarn add @santi100a/assertion-lib`
+- Via PNPM: `pnpm install @santi100a/assertion-lib`
 
 ### API
 
@@ -140,118 +140,139 @@ Make sure you follow the [contribution Code of Conduct](https://github.com/santi
   | `name`             | `string` | The displayed name in the `TypeError` thrown if `str` does not match `re`. |
   | Defaults to `str`. | No       |
 
-## Usage example
+- `function assertArrayTypes<T = unknown>(values: T[], types: Type[]): void;` (since 2.0.3)
+  | Parameter | Type | Description | Optional? |
+  | --------- | ------------ | ---------------------------------------------------------------------------------------------------------------- | --------- |
+  | `values` | `T[]` | An array of elements to be checked. | No |
+  | `types` | `Type[]` | An array of strings representing the expected types of elements in the array. | No |
+
+- `function assertArrayTypes<T = unknown>(values: T[], types: Type[], name: string): void;` (since 2.0.3)
+  | Parameter | Type | Description | Optional? |
+  | --------- | ------------ | ---------------------------------------------------------------------------------------------------------------- | --------- |
+  | `values` | `T[]` | An array of elements to be checked. | No |
+  | `types` | `Type[]` | An array of strings representing the expected types of elements in the array. | No |
+  | `name` | `string` | A string representing the name of the "values" array. | No |
+
+## Usage examples
 
 ```typescript
 // Import the assertion functions
 
 // CJS
-const assert = require('@santi100/assertion-lib/cjs/assert');
-const assertTypeOf = require('@santi100/assertion-lib/cjs/type-of');
-const assertOneOf = require('@santi100/assertion-lib/cjs/one-of');
-const assertInteger = require('@santi100/assertion-lib/cjs/integer');
-const assertMin = require('@santi100/assertion-lib/cjs/min');
-const assertMax = require('@santi100/assertion-lib/cjs/max');
-const assertRange = require('@santi100/assertion-lib/cjs/range');
-const assertArray = require('@santi100/assertion-lib/cjs/array');
-const assertDefined = require('@santi100/assertion-lib/cjs/defined');
-const assertMatch = require('@santi100/assertion-lib/cjs/match');
+const assert = require('@santi100a/assertion-lib/cjs/assert');
+const assertTypeOf = require('@santi100a/assertion-lib/cjs/type-of');
+const assertOneOf = require('@santi100a/assertion-lib/cjs/one-of');
+const assertInteger = require('@santi100a/assertion-lib/cjs/integer');
+const assertMin = require('@santi100a/assertion-lib/cjs/min');
+const assertMax = require('@santi100a/assertion-lib/cjs/max');
+const assertRange = require('@santi100a/assertion-lib/cjs/range');
+const assertArray = require('@santi100a/assertion-lib/cjs/array');
+const assertDefined = require('@santi100a/assertion-lib/cjs/defined');
+const assertMatch = require('@santi100a/assertion-lib/cjs/match');
 
 // TypeScript
-import assert = require('@santi100/assertion-lib/cjs/assert');
-import assertTypeOf = require('@santi100/assertion-lib/cjs/type-of');
-import assertOneOf = require('@santi100/assertion-lib/cjs/one-of');
-import assertInteger = require('@santi100/assertion-lib/cjs/integer');
-import assertMin = require('@santi100/assertion-lib/cjs/min');
-import assertMax = require('@santi100/assertion-lib/cjs/max');
-import assertRange = require('@santi100/assertion-lib/cjs/range');
-import assertArray = require('@santi100/assertion-lib/cjs/array');
-import assertDefined = require('@santi100/assertion-lib/cjs/defined');
-import assertMatch = require('@santi100/assertion-lib/cjs/match');
+import assert = require('@santi100a/assertion-lib/cjs/assert');
+import assertTypeOf = require('@santi100a/assertion-lib/cjs/type-of');
+import assertOneOf = require('@santi100a/assertion-lib/cjs/one-of');
+import assertInteger = require('@santi100a/assertion-lib/cjs/integer');
+import assertMin = require('@santi100a/assertion-lib/cjs/min');
+import assertMax = require('@santi100a/assertion-lib/cjs/max');
+import assertRange = require('@santi100a/assertion-lib/cjs/range');
+import assertArray = require('@santi100a/assertion-lib/cjs/array');
+import assertDefined = require('@santi100a/assertion-lib/cjs/defined');
+import assertMatch = require('@santi100a/assertion-lib/cjs/match');
 
 // ESM
-import assert from '@santi100/assertion-lib/cjs/assert';
-import assertTypeOf from '@santi100/assertion-lib/cjs/type-of';
-import assertOneOf from '@santi100/assertion-lib/cjs/one-of';
-import assertInteger from '@santi100/assertion-lib/cjs/integer';
-import assertMin from '@santi100/assertion-lib/cjs/min';
-import assertMax from '@santi100/assertion-lib/cjs/max';
-import assertRange from '@santi100/assertion-lib/cjs/range';
-import assertArray from '@santi100/assertion-lib/cjs/array';
-import assertDefined from '@santi100/assertion-lib/cjs/defined';
-import assertMatch from '@santi100/assertion-lib/cjs/match';
+import assert from '@santi100a/assertion-lib/cjs/assert';
+import assertTypeOf from '@santi100a/assertion-lib/cjs/type-of';
+import assertOneOf from '@santi100a/assertion-lib/cjs/one-of';
+import assertInteger from '@santi100a/assertion-lib/cjs/integer';
+import assertMin from '@santi100a/assertion-lib/cjs/min';
+import assertMax from '@santi100a/assertion-lib/cjs/max';
+import assertRange from '@santi100a/assertion-lib/cjs/range';
+import assertArray from '@santi100a/assertion-lib/cjs/array';
+import assertDefined from '@santi100a/assertion-lib/cjs/defined';
+import assertMatch from '@santi100a/assertion-lib/cjs/match';
 
 // Or import it all
-import * as assertionLib from '@santi100/assertion-lib'; // ESM or TypeScript
-const assertionLib = require('@santi100/assertion-lib'); // CJS
+import * as assertionLib from '@santi100a/assertion-lib'; // ESM or TypeScript
+const assertionLib = require('@santi100a/assertion-lib'); // CJS
 // Usage example for assert
 function divide(a, b) {
-  assert(typeof a === 'number' && typeof b === 'number', {
-    message: 'Arguments must be numbers.'
-  });
+	assert(typeof a === 'number' && typeof b === 'number', {
+		message: 'Arguments must be numbers.'
+	});
 
-  assert(b !== 0, {
-    message: 'Cannot divide by zero.',
-    expected: 'Non-zero value',
-    actual: b
-  });
+	assert(b !== 0, {
+		message: 'Cannot divide by zero.',
+		expected: 'Non-zero value',
+		actual: b
+	});
 
-  return a / b;
+	return a / b;
 }
 
 // Usage example for assertTypeOf
 function greet(name) {
-  assertTypeOf(name, 'string', 'name');
+	assertTypeOf(name, 'string', 'name');
 
-  return `Hello, ${name}!`;
+	return `Hello, ${name}!`;
 }
 
 // Usage example for assertOneOf
 function checkOperator(operator) {
-  assertOneOf(operator, 'operator', ['+', '-', '*', '/'], (a, b) => a.trim() === b.trim());
-  return `Valid operator: ${operator}`;
+	assertOneOf(
+		operator,
+		'operator',
+		['+', '-', '*', '/'],
+		(a, b) => a.trim() === b.trim()
+	);
+	return `Valid operator: ${operator}`;
 }
 
 // Usage example for assertInteger
 function multiplyByTwo(num) {
-  assertInteger(num, 'num');
-  return num * 2;
+	assertInteger(num, 'num');
+	return num * 2;
 }
 
 // Usage example for assertMin
 function greetWithMinimumLength(name) {
-  assertMin(name.length, 'name', 3);
-  return `Hello, ${name}!`;
+	assertMin(name.length, 'name', 3);
+	return `Hello, ${name}!`;
 }
 
 // Usage example for assertMax
 function greetWithMaximumLength(name) {
-  assertMax(name.length, 'name', 10);
-  return `Hello, ${name}!`;
+	assertMax(name.length, 'name', 10);
+	return `Hello, ${name}!`;
 }
 
 // Usage example for assertRange
 function greetWithPreferredLength(name) {
-  assertRange(name.length, 'name', 5, 8);
-  return `Hello, ${name}!`;
+	assertRange(name.length, 'name', 5, 8);
+	return `Hello, ${name}!`;
 }
 
 // Usage example for assertArray
 function sumNumbers(numbers) {
-  assertArray(numbers, 'numbers');
-  return numbers.reduce((sum, num) => sum + num, 0);
+	assertArray(numbers, 'numbers');
+	return numbers.reduce((sum, num) => sum + num, 0);
 }
 
 // Usage example for assertDefined
 function greetIfDefined(name) {
-  assertDefined(name, 'name');
-  return `Hello, ${name}!`;
+	assertDefined(name, 'name');
+	return `Hello, ${name}!`;
 }
 
 // Usage example for assertMatch
 function isValidEmail(email) {
-  assertMatch(email, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i, 'email');
-  return true;
+	assertMatch(
+		email,
+		/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i,
+		'email'
+	);
+	return true;
 }
-
 ```

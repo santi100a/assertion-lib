@@ -7,8 +7,13 @@
  * @param min The minimum value for `arg`.
  * @param max The maximum value for `arg`.
  */
-declare function assertRange(arg: unknown, name: string, min: unknown, max: unknown): void;
+declare function assertRange(
+	arg: unknown,
+	name: string,
+	min: unknown,
+	max: unknown
+): void;
 declare namespace assertRange {
-    var assertRange: typeof import("./range");
+	var assertRange: typeof import('./range');
 }
 export = assertRange;

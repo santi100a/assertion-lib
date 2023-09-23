@@ -49,12 +49,12 @@ function assertOneOf<T = unknown>(
 	}
 	if (typeof comparator === 'boolean')
 		throw new TypeError(
-			'The `shallow` argument is no longer valid. Please pass a function instead.'
+			'The "shallow" argument is no longer valid. Please pass a function instead.'
 		);
 	else if (typeof comparator !== 'function')
-		throw new TypeError(`"comparator" must be of type "function". Got ${
-			comparator
-		} of type "${typeof comparator}".`);
+		throw new TypeError(
+			`"comparator" must be of type "function". Got "${comparator}" of type "${typeof comparator}".`
+		);
 	if (__indexOf(choices, arg as T) === -1)
 		throw new TypeError(
 			`"${name}" must be one of ${choices.join(

@@ -14,8 +14,12 @@ declare function assertExclusiveMin(arg: unknown, min: unknown): void;
  * @param name An expression name to be put in the `TypeError`'s message. Defaults to "arg".
  * @since 1.0.8
  */
-declare function assertExclusiveMin(arg: unknown, min: unknown, name: string): void;
+declare function assertExclusiveMin(
+	arg: unknown,
+	min: unknown,
+	name: string
+): void;
 declare namespace assertExclusiveMin {
-    var assertExclusiveMin: typeof import("./exclusive-min");
+	var assertExclusiveMin: typeof import('./exclusive-min');
 }
 export = assertExclusiveMin;

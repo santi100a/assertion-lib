@@ -17,7 +17,7 @@
 ## Version 2.0.0 (MAJOR VERSION; BREAKING CHANGES!)
 
 - **DELETED `assertType`.**
-- **Replaced `assertOneOf`'s  `shallow` parameter with `comparator` to remove reliance on `@santi100/equal-lib`.**
+- **Replaced `assertOneOf`'s `shallow` parameter with `comparator` to remove reliance on `@santi100/equal-lib`.**
 - Modified module system to use `export =` for all individual module files, whilst keeping compatibility.
 
 ## Version 2.0.1
@@ -27,3 +27,10 @@
 ## Version 2.0.2
 
 - Fixed circular dependency bug with `assertTypeOf` and `assertOneOf`.
+
+## Version 2.0.3
+
+- Added `assertArrayTypes`.
+- Added `assertDifferent`.
+- Added `assertEqual`.
+- Added `assertOneOfTypes`.

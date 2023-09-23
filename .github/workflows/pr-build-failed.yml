@@ -25,7 +25,6 @@ jobs:
             Don't worry, it'll run again if you commit any changes to this PR.
       - name: Label PR as "CI failed"
         uses: actions/labeler@v4
-        with: 
+        with:
           sync-label: true
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          

@@ -7,6 +7,17 @@ export type Type =
 	| 'undefined'
 	| 'object'
 	| 'function';
+
+export const TYPES: Type[] = [
+	'string',
+	'number',
+	'bigint',
+	'boolean',
+	'symbol',
+	'undefined',
+	'object',
+	'function'
+];
 export class AssertionError<E = unknown, A = unknown>
 	extends Error
 	implements AssertOptionalParams<E, A>

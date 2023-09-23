@@ -11,7 +11,7 @@ const esmModuleContent = `import cjsModule from './cjs/index.js';
 /*eslint no-empty-pattern: "warn"*/
 export const { ${cjsExports.join(', ')} } = cjsModule;
 `;
-console.log('📦 Writing wrapper...')
+console.log('📦 Writing wrapper...');
 writeFileSync('./index.mjs', esmModuleContent);
 console.log('✨ Prettifying...');
 // eslint-disable-next-line @typescript-eslint/no-var-requires

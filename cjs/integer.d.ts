@@ -12,6 +12,6 @@ declare function assertInteger(arg: number, name: string): void;
  */
 declare function assertInteger(arg: number): void;
 declare namespace assertInteger {
-    var assertInteger: typeof import("./integer");
+	var assertInteger: typeof import('./integer');
 }
 export = assertInteger;

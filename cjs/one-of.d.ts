@@ -6,7 +6,11 @@
  * @param choices An array containing the posible values `arg` should have in order for an error not
  * to be thrown.
  */
-declare function assertOneOf<T = unknown>(arg: unknown, name: string, choices: T[]): void;
+declare function assertOneOf<T = unknown>(
+	arg: unknown,
+	name: string,
+	choices: T[]
+): void;
 /**
  * Asserts `arg` is one of `choices`, using `comparator` to compare `arg` against each choice.
  * Throws a `TypeError` otherwise.
@@ -23,8 +27,13 @@ declare function assertOneOf<T = unknown>(arg: unknown, name: string, choices: T
  * to be thrown.
  * @param comparator A custom comparator to add, for instance, deep equality!
  */
-declare function assertOneOf<T = unknown>(arg: unknown, name: string, choices: T[], comparator: (a: unknown, b: T) => boolean): void;
+declare function assertOneOf<T = unknown>(
+	arg: unknown,
+	name: string,
+	choices: T[],
+	comparator: (a: unknown, b: T) => boolean
+): void;
 declare namespace assertOneOf {
-    var assertOneOf: typeof import("./one-of");
+	var assertOneOf: typeof import('./one-of');
 }
 export = assertOneOf;

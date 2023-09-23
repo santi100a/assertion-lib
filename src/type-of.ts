@@ -1,5 +1,5 @@
 import { assertOneOf } from './one-of';
-import type { Type } from './core';
+import { type Type, TYPES } from './core';
 
 /**
  * Asserts that the type of `arg` is `expectedType`. Throws a `TypeError` otherwise.
@@ -18,16 +18,6 @@ function assertTypeOf(arg: unknown, expectedType: Type, name: string): void;
 function assertTypeOf(arg: unknown, expectedType: Type): void;
 /** Implementation */
 function assertTypeOf(arg: unknown, expectedType: Type, name = 'arg') {
-	const TYPES: Type[] = [
-		'string',
-		'number',
-		'bigint',
-		'boolean',
-		'symbol',
-		'undefined',
-		'object',
-		'function'
-	];
 	assertOneOf(expectedType, 'expectedType', TYPES);
 	if (typeof arg !== expectedType)
 		throw new TypeError(

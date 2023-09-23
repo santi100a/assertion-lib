@@ -6,7 +6,11 @@
  * @param name An expression name to be put in the `TypeError`'s message. Defaults to "arg".
  * @since 1.0.8
  */
-declare function assertExclusiveMax(arg: unknown, max: unknown, name: string): void;
+declare function assertExclusiveMax(
+	arg: unknown,
+	max: unknown,
+	name: string
+): void;
 /**
  * Asserts `arg` is smaller than `max`. Throws a `TypeError` otherwise.
  *
@@ -16,6 +20,6 @@ declare function assertExclusiveMax(arg: unknown, max: unknown, name: string): v
  */
 declare function assertExclusiveMax(arg: unknown, max: unknown): void;
 declare namespace assertExclusiveMax {
-    var assertExclusiveMax: typeof import("./exclusive-max");
+	var assertExclusiveMax: typeof import('./exclusive-max');
 }
 export = assertExclusiveMax;

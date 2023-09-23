@@ -9,7 +9,7 @@ import { AssertionError, AssertOptionalParams } from './core';
  */
 function assert(
 	condition: boolean,
-	errorParams: AssertOptionalParams<true, boolean>
+	errorParams?: AssertOptionalParams<true, boolean>
 ): void;
 function assert(
 	condition: boolean,

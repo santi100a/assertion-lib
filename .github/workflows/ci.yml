@@ -22,43 +22,42 @@ jobs:
       - name: Check commit message
         id: commit
         run: |
-         COMMIT_MSG=$(/usr/bin/git log --format=%B -n 1 HEAD)
-         STRING=$(echo $COMMIT_MSG | (grep -E "infra:|docs:|lint:|code-style:" || echo ''))
+          COMMIT_MSG=$(/usr/bin/git log --format=%B -n 1 HEAD)
+          STRING=$(echo $COMMIT_MSG | (grep -E "infra:|docs:|lint:|code-style:" || echo ''))
 
-         if [ -z "$STRING" ]; then
-          echo "IS_RELEASE_COMMIT=1" >> $GITHUB_OUTPUT
-          echo "IS_RELEASE_COMMIT=1" >> $GITHUB_ENV
-         else 
-          echo "This commit will NOT trigger a release."
+          if [ -z "$STRING" ]; then
+           echo "IS_RELEASE_COMMIT=1" >> $GITHUB_OUTPUT
+           echo "IS_RELEASE_COMMIT=1" >> $GITHUB_ENV
+          else 
+           echo "This commit will NOT trigger a release."
 
-          echo "IS_RELEASE_COMMIT=0" >> $GITHUB_OUTPUT
-          echo "IS_RELEASE_COMMIT=0" >> $GITHUB_ENV
-         fi
-        
+           echo "IS_RELEASE_COMMIT=0" >> $GITHUB_OUTPUT
+           echo "IS_RELEASE_COMMIT=0" >> $GITHUB_ENV
+          fi
 
       - name: Install dependencies
-        run: npm ci -f
+        run: yarn
 
       - name: Validate Markdown links
-        run: npm run check-links
+        run: yarn check-links
 
       - name: Validate package.json
-        run: npm run validate-package-json
+        run: yarn validate-package-json
 
       - name: Run ESLint
         if: env.IS_RELEASE_COMMIT == '1'
         run: |
-         npm run lint
+          yarn lint
 
       - name: Build source code
         if: env.IS_RELEASE_COMMIT == '1'
         run: |
-         npm run build
+          yarn build
 
       - name: Run test suites
         if: env.IS_RELEASE_COMMIT == '1'
         run: |
-         npm run test
+          yarn test
   release:
     if: needs.test.outputs.IS_RELEASE_COMMIT == '1'
     permissions:
@@ -89,6 +88,7 @@ jobs:
   publish-npm:
     needs: release
     runs-on: ubuntu-latest
+    environment: npm-registry
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -108,6 +108,7 @@ jobs:
         run: yarn publish --access public
   publish-gpr:
     needs: release
+    environment: github-packages
     permissions:
       packages: write
     runs-on: ubuntu-latest

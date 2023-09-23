@@ -1,6 +1,6 @@
-describe('assertMatch_function', () => {
-	const assertMatch = require('../cjs/match');
+import assertMatch = require('../cjs/match');
 
+describe('assertMatch_function', () => {
 	// Tests that a string matches a regular expression
 	it('test_regex_match', () => {
 		expect(() => {
@@ -11,8 +11,8 @@ describe('assertMatch_function', () => {
 	// Tests that a string matches a Matchable object
 	it('test_matchable_match', () => {
 		const matchable = {
-			[Symbol.match](string) {
-				return ''.concat(string).match(/hello/);
+			[Symbol.match](str: string) {
+				return ''.concat(str).match(/hello/);
 			}
 		};
 		expect(() => {
@@ -20,11 +20,8 @@ describe('assertMatch_function', () => {
 		}).not.toThrow();
 	});
 	it('code_splitting', () => {
-        expect(assertMatch).toBe(require('..').assertMatch);
-    });
-
-
-	
+		expect(assertMatch).toBe(require('..').assertMatch);
+	});
 
 	// Tests that a non-matching string throws an error for a regular expression
 	it('test_non_matching_string_regex_match', () => {
@@ -36,8 +33,8 @@ describe('assertMatch_function', () => {
 	// Tests that a non-matching string throws an error for a Matchable object
 	it('test_non_matching_string_matchable_match', () => {
 		const matchable = {
-			[Symbol.match](string) {
-				return string.match(/hello/);
+			[Symbol.match](str: string) {
+				return ''.concat(str).match(/hello/);
 			}
 		};
 		expect(() => {

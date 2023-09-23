@@ -6,7 +6,11 @@
  * @param name An optional expression name to be put in the `TypeError`'s message. Defaults to "arg".
  * @since 1.0.8
  */
-export declare function assertExclusiveMax(arg: unknown, max: unknown, name?: string): void;
+export declare function assertExclusiveMax(
+	arg: unknown,
+	max: unknown,
+	name?: string
+): void;
 /**
  * Asserts `arg` is bigger than `min`. Throws a `TypeError` otherwise.
  *
@@ -15,7 +19,11 @@ export declare function assertExclusiveMax(arg: unknown, max: unknown, name?: st
  * @param name An optional expression name to be put in the `TypeError`'s message. Defaults to "arg".
  * @since 1.0.8
  */
-export declare function assertExclusiveMin(arg: unknown, min: unknown, name?: string): void;
+export declare function assertExclusiveMin(
+	arg: unknown,
+	min: unknown,
+	name?: string
+): void;
 /**
  * Asserts `num` is either zero or a positive number. Throws a `TypeError` otherwise.
  *

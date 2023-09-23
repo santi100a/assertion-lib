@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"target": "ES3",
+		"strict": true,
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"strictFunctionTypes": true,
+		"strictNullChecks": true,
+		"module": "commonjs"
+	}
+}

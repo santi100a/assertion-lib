@@ -8,6 +8,6 @@
  */
 declare function assertMax(arg: unknown, name: string, max: unknown): void;
 declare namespace assertMax {
-    var assertMax: typeof import("./max");
+	var assertMax: typeof import('./max');
 }
 export = assertMax;

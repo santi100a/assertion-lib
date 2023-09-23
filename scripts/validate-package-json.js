@@ -9,7 +9,8 @@ switch (typeof json.author) {
 		if (!json.author.trim()) throw new Error('❌ "author" invalid or missing.');
 		break;
 	case 'object':
-		if (json.author === null) throw new Error('❌ "author" invalid or missing.');
+		if (json.author === null)
+			throw new Error('❌ "author" invalid or missing.');
 		if (typeof json.author.name !== 'string' || !json.author.name.trim())
 			throw new Error('❌ "author.name" invalid or missing.');
 		if (
@@ -21,9 +22,9 @@ switch (typeof json.author) {
 			throw new Error('❌ "author.email" invalid or missing.');
 		if (typeof json.author.url !== 'undefined')
 			try {
-				new URL(json.author.url)
+				new URL(json.author.url);
 			} catch (e) {
-				throw new Error('❌ "author.url" invalid or missing.')
+				throw new Error('❌ "author.url" invalid or missing.');
 			}
 		break;
 	default:
@@ -50,7 +51,7 @@ if (
 else console.log('\t ✅ Repository is object: ok');
 
 if (json.repository.type !== 'git')
-throw new Error('❌ "repository.type" isn\'t Git.');
+	throw new Error('❌ "repository.type" isn\'t Git.');
 else console.log('\t ✅ Repo type: ok');
 
 try {

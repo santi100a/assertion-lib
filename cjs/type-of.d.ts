@@ -1,4 +1,4 @@
-import type { Type } from './core';
+import { type Type } from './core';
 /**
  * Asserts that the type of `arg` is `expectedType`. Throws a `TypeError` otherwise.
  *
@@ -6,7 +6,11 @@ import type { Type } from './core';
  * @param expectedType The expected type. Must be one of {@link Type}.
  * @param name An expression name to be put in the `TypeError`'s message.
  */
-declare function assertTypeOf(arg: unknown, expectedType: Type, name: string): void;
+declare function assertTypeOf(
+	arg: unknown,
+	expectedType: Type,
+	name: string
+): void;
 /**
  * Asserts that the type of `arg` is `expectedType`. Throws a `TypeError` otherwise.
  *
@@ -15,6 +19,6 @@ declare function assertTypeOf(arg: unknown, expectedType: Type, name: string): v
  */
 declare function assertTypeOf(arg: unknown, expectedType: Type): void;
 declare namespace assertTypeOf {
-    var assertTypeOf: typeof import("./type-of");
+	var assertTypeOf: typeof import('./type-of');
 }
 export = assertTypeOf;

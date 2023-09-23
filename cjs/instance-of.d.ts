@@ -6,7 +6,11 @@
  * @param name An expression name to be put in the `TypeError`'s message. Defaults to "arg".
  * @since 1.0.8
  */
-declare function assertInstanceOf<T = unknown>(arg: unknown, clas: new (...args: unknown[]) => T, name: string): void;
+declare function assertInstanceOf<T = unknown>(
+	arg: unknown,
+	clas: new (...args: unknown[]) => T,
+	name: string
+): void;
 /**
  * Asserts `arg` is an instance of `clas`. Throws a `TypeError` otherwise.
  *
@@ -14,8 +18,11 @@ declare function assertInstanceOf<T = unknown>(arg: unknown, clas: new (...args:
  * @param clas Any valid constructor.
  * @since 1.0.8
  */
-declare function assertInstanceOf<T = unknown>(arg: unknown, clas: new (...args: unknown[]) => T): void;
+declare function assertInstanceOf<T = unknown>(
+	arg: unknown,
+	clas: new (...args: unknown[]) => T
+): void;
 declare namespace assertInstanceOf {
-    var assertInstanceOf: typeof import("./instance-of");
+	var assertInstanceOf: typeof import('./instance-of');
 }
 export = assertInstanceOf;

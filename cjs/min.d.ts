@@ -7,6 +7,6 @@
  */
 declare function assertMin(arg: unknown, name: string, min: unknown): void;
 declare namespace assertMin {
-    var assertMin: typeof import("./min");
+	var assertMin: typeof import('./min');
 }
 export = assertMin;

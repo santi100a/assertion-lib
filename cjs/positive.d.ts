@@ -6,6 +6,6 @@
  */
 declare function assertPositive(num: number, name?: string): void;
 declare namespace assertPositive {
-    var assertPositive: typeof import("./positive");
+	var assertPositive: typeof import('./positive');
 }
 export = assertPositive;

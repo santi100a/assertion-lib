@@ -1,10 +1,17 @@
-"use strict";
-var type_of_1 = require("./type-of");
+'use strict';
+var type_of_1 = require('./type-of');
 function assertPositive(num, name) {
-    if (name === void 0) { name = 'arg'; }
-    (0, type_of_1.assertTypeOf)(num, 'number', 'val');
-    if (num < 0)
-        throw new TypeError("\"".concat(name, "\" must be positive or zero. Got ").concat(num, " of type ").concat(typeof num, "."));
+	if (name === void 0) {
+		name = 'arg';
+	}
+	(0, type_of_1.assertTypeOf)(num, 'number', 'val');
+	if (num < 0)
+		throw new TypeError(
+			'"'
+				.concat(name, '" must be positive or zero. Got ')
+				.concat(num, ' of type ')
+				.concat(typeof num, '.')
+		);
 }
 assertPositive.assertPositive = assertPositive;
 module.exports = assertPositive;

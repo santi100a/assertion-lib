@@ -9,6 +9,6 @@ import { type Type } from './core';
  */
 declare function assertType<T = unknown>(val: T, expectedType: Type): void;
 declare namespace assertType {
-    var assertType: typeof import("./type[deprecated]");
+	var assertType: typeof import('./type[deprecated]');
 }
 export = assertType;
