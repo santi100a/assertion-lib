@@ -34,3 +34,8 @@
 - Added `assertDifferent`.
 - Added `assertEqual`.
 - Added `assertOneOfTypes`.
+
+## Version 2.0.4
+
+- Added `assertFinite`.
+- Added `assertValidNumber`.

@@ -1,6 +1,6 @@
 {
 	"name": "@santi100a/assertion-lib",
-	"version": "2.0.3",
+	"version": "2.0.4",
 	"main": "cjs/index.js",
 	"typings": "cjs/index.d.ts",
 	"module": "./index.mjs",

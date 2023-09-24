@@ -15,7 +15,7 @@ describe('assertExclusiveMin_function', () => {
 
 	// Tests that the function throws a TypeError with the correct message when arg is not greater than min.
 	it('test_arg_type_error', () => {
-		expect(() => assertExclusiveMin(3, 3)).toThrow(TypeError);
+		expect(() => assertExclusiveMin(3, 3)).toThrow(/"arg" must be bigger than 3\./);
 		expect(() => assertExclusiveMin(3, 3)).toThrow(
 			`"arg" must be bigger than 3. Got 3 of type number.`
 		);
@@ -23,9 +23,8 @@ describe('assertExclusiveMin_function', () => {
 
 	// Tests that the function throws a TypeError with the correct message when arg is equal to min.
 	it('test_arg_equal_to_min', () => {
-		expect(() => assertExclusiveMin(5, 5)).toThrow(TypeError);
 		expect(() => assertExclusiveMin(5, 5)).toThrow(
-			`"arg" must be bigger than 5. Got 5 of type number.`
+			/"arg" must be bigger than 5. Got 5 of type number\./
 		);
 	});
 

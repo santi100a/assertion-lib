@@ -2,7 +2,7 @@
  * Asserts `arg` is smaller or equal than `max`. Throws a `RangeError` otherwise.
  *
  * @param arg Any value.
- * @param name An expression name to be put in the `TypeError`'s message.
+ * @param name An expression name to be put in the `RangeError`'s message.
 
  * @param max The maximum value for `arg`.
  */

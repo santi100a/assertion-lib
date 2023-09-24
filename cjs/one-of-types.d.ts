@@ -7,9 +7,5 @@ import { type Type } from './core';
  * @throws A {@link TypeError} if any of the provided types is invalid or if the type of the value
  * is not in the list.
  */
-declare function assertOneOfTypes<T = unknown>(
-	value: T,
-	types: Type[],
-	name?: string
-): void;
+declare function assertOneOfTypes<T = unknown>(value: T, types: Type[], name?: string): void;
 export = assertOneOfTypes;

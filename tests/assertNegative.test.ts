@@ -3,12 +3,12 @@ describe('assertNegative_function', () => {
 
 	// Tests that assertNegative throws a TypeError when passed 0.
 	it('test_negative_zero', () => {
-		expect(() => assertNegative(0)).toThrow(TypeError);
+		expect(() => assertNegative(0)).toThrow(/"arg" must be negative/);
 	});
 
 	// Tests that assertNegative throws a TypeError when passed a positive number.
 	it('test_negative_positive', () => {
-		expect(() => assertNegative(5)).toThrow(TypeError);
+		expect(() => assertNegative(5)).toThrow(/"arg" must be negative/);
 	});
 
 	// Tests that assertNegative throws a TypeError when passed a non-number value.

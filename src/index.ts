@@ -13,14 +13,27 @@ import assertRange = require('./range');
 import assertTypeOf = require('./type-of');
 import assertMatch = require('./match');
 import assertDefined = require('./defined');
+import assertArrayTypes = require('./array-types');
+import assertOneOfTypes = require('./one-of-types');
+import assertEqual = require('./equal');
+import assertDifferent = require('./different');
+import assertFinite = require('./finite');
+import assertValidNumber = require('./valid-number');
+
 
 export * from './core';
 export {
 	assertArray,
+	assertArrayTypes,
+	assertEqual,
+	assertDifferent,
+	assertOneOfTypes,
 	assert,
 	assertExclusiveMax,
 	assertExclusiveMin,
 	assertInstanceOf,
+	assertFinite,
+	assertValidNumber,
 	assertInteger,
 	assertMax,
 	assertMin,

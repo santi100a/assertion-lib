@@ -1,5 +1,5 @@
 interface Matchable {
-	[Symbol.match](string: string): RegExpMatchArray | null;
+    [Symbol.match](string: string): RegExpMatchArray | null;
 }
 /**
  * Asserts `str` matches `re`. Throws a `TypeError` otherwise.
@@ -22,14 +22,10 @@ declare function assertMatch(str: string, re: RegExp, name?: string): void;
  * @param name The name to be displayed in the `TypeError` thrown if `str` does not match `matcher`.
  * Defaults to `str`.
  */
-declare function assertMatch(
-	str: string,
-	matcher: Matchable,
-	name?: string
-): void;
+declare function assertMatch(str: string, matcher: Matchable, name?: string): void;
 declare namespace assertMatch {
-	interface Matchable {
-		[Symbol.match](string: string): RegExpMatchArray | null;
-	}
+    interface Matchable {
+        [Symbol.match](string: string): RegExpMatchArray | null;
+    }
 }
 export = assertMatch;

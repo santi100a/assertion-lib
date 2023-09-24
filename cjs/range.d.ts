@@ -3,17 +3,12 @@
  * Throws a `RangeError` otherwise.
  *
  * @param arg Any value.
- * @param name An expression name to be put in the `TypeError`'s message.
+ * @param name An expression name to be put in the `RangeError`'s message.
  * @param min The minimum value for `arg`.
  * @param max The maximum value for `arg`.
  */
-declare function assertRange(
-	arg: unknown,
-	name: string,
-	min: unknown,
-	max: unknown
-): void;
+declare function assertRange(arg: unknown, name: string, min: unknown, max: unknown): void;
 declare namespace assertRange {
-	var assertRange: typeof import('./range');
+    var assertRange: typeof import("./range");
 }
 export = assertRange;

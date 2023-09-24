@@ -6,6 +6,6 @@
  */
 declare function assertArray(arg: unknown, name?: string): void;
 declare namespace assertArray {
-	var assertArray: typeof import('./array');
+    var assertArray: typeof import("./array");
 }
 export = assertArray;
